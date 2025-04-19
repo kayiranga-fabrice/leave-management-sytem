@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customizable Login Page with Wave Effect</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: #f4f4f4;
+    }
+
+    /* Wave Section */
+    .wave-section {
+      position: relative;
+      background-color: #4e73df; /* Customize the background color */
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .wave-section .content h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .wave-section .content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .wave-section .btn {
+      padding: 12px 30px;
+      background-color: #fff;
+      color: #4e73df;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .wave-section .btn:hover {
+      background-color: #3e63c6;
+      color: white;
+    }
+
+    /* Wave Effect */
+    .wave-section::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: #3e63c6; /* Customize the wave color */
+      clip-path: ellipse(60% 100% at 50% 0);
+      z-index: -1;
+    }
+
+    /* Login Form Section */
+    .login-form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-form h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 2rem;
+      color: #333;
+    }
+
+    .login-form input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .login-form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4e73df;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-form button:hover {
+      background-color: #3e63c6;
+    }
+
+    /* More Info Section */
+    .info-section {
+      padding: 40px 20px;
+      background-color: #f1f1f1;
+      text-align: center;
+    }
+
+    .info-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .info-section p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Wave Section -->
+  <section class="wave-section">
+    <div class="content">
+      <h1>Welcome Back!</h1>
+      <p>Please log in to continue</p>
+    </div>
+  </section>
+
+  <!-- Login Form Section -->
+  <section class="login-form">
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <!-- More Info Section (for demonstration) -->
+  <section id="more-info" class="info-section">
+    <div class="info-content">
+      <h2>More Information</h2>
+      <p>This page is fully customizable. You can change the wave colors, text, and form elements.</p>
+    </div>
+  </section>
+
+</body>
+</html>
+

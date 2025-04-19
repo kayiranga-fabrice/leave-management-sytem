@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Customizable Page with Wave Effect</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: #f4f4f4;
+    }
+
+    /* Wave Section */
+    .wave-section {
+      position: relative;
+      background-color: #2c3e50; /* Customize the background color */
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .wave-section .content h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .wave-section .content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    /* Wave Effect */
+    .wave-section::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: #34495e; /* Customize the wave color */
+      clip-path: ellipse(60% 100% at 50% 0);
+      z-index: -1;
+    }
+
+    /* About Section */
+    .about-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #333;
+    }
+
+    .about-section p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .about-section ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+
+    /* Back Button */
+    .about-section .back-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: #4e73df;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 30px;
+      transition: background-color 0.3s ease;
+    }
+
+    .about-section .back-btn:hover {
+      background-color: #3e63c6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Wave Section -->
+  <section class="wave-section">
+    <div class="content">
+      <h1>About Us</h1>
+      <p>Learn more about our website and the services we offer</p>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <h2>Our Mission</h2>
+    <p>We strive to deliver exceptional value and make an impact through innovative solutions. Our focus is on building products that not only solve problems but also enrich the lives of our users.</p>
+
+    <h3>What We Do:</h3>
+    <ul>
+      <li>Develop cutting-edge applications</li>
+      <li>Provide excellent customer support</li>
+      <li>Innovate and improve continuously</li>
+    </ul>
+
+    <h3>Our Values:</h3>
+    <ul>
+      <li>Integrity: We do the right thing, even when no one is looking</li>
+      <li>Innovation: We are committed to creativity and new ideas</li>
+      <li>Customer-Centric: Our customers' needs are at the heart of our mission</li>
+    </ul>
+
+    <a href="/" class="back-btn">Back to Home</a>
+  </section>
+
+</body>
+</html>

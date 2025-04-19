@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave Requests</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fc;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      color: #444;
+      font-weight: normal;
+      margin-top: 30px;
+    }
+
+    /* Table Styling */
+    table {
+      width: 90%;
+      margin: 30px auto;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Button Styling */
+    button {
+      padding: 6px 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .reject-button {
+      background-color: #dc3545;
+    }
+
+    .reject-button:hover {
+      background-color: #c82333;
+    }
+
+    /* Form Styling */
+    form {
+      display: inline;
+      margin-right: 5px;
+    }
+
+    /* Footer Styling */
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    /* Back Button */
+    .back-button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>All Leave Requests</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% leaveRequests.forEach((request, index) => { %>
+        <tr>
+          <td><%= request.username %></td>
+          <td><%= request.startDate %></td>
+          <td><%= request.endDate %></td>
+          <td><%= request.reason %></td>
+          <td><%= request.status || 'Pending' %></td>
+          <td>
+            <form action="/admin/leave-requests/approve" method="POST">
+              <input type="hidden" name="requestId" value="<%= index %>">
+              <button type="submit">Approve</button>
+            </form>
+            <form action="/admin/leave-requests/reject" method="POST">
+              <input type="hidden" name="requestId" value="<%= index %>">
+              <button type="submit" class="reject-button">Reject</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <a href="/dashboard" class="back-button">Back to Dashboard</a>
+  </div>
+
+</body>
+</html>
+
+
