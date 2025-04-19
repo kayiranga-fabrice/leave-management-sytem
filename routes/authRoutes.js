@@ -4,7 +4,8 @@ const path = require('path');  // Import path module
 
 // Simple user credentials (hardcoded for demonstration)
 const users = {
-  user: 'password'
+  user: { password: 'password', role: 'user' },
+  admin: { password: 'adminpass', role: 'admin' }
 };
 
 // Simple in-memory leave requests for demonstration
@@ -32,8 +33,7 @@ router.get('/about', (req, res) => {
 
 // Admin route - View all leave requests
 router.get('/admin/leave-requests', (req, res) => {
-  // Assuming the user is authenticated and is an admin (you can implement the actual check later)
-  const isAdmin = true;  // For demo purposes, we're assuming the user is an admin.
+  const isAdmin = req.body.username === 'admin'; // For now, we are just using this to check if username is admin.
   
   if (!isAdmin) {
     return res.send('Access denied. You must be an admin to view this page.');
@@ -91,8 +91,14 @@ router.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   // Simple authentication logic
-  if (users[username] && users[username] === password) {
-    res.send('Login successful! <br><a href="/dashboard">Go to Dashboard</a>');
+  if (users[username] && users[username].password === password) {
+    const role = users[username].role;
+
+    if (role === 'admin') {
+      res.send('Admin login successful! <br><a href="/admin/leave-requests">View Leave Requests</a>');
+    } else {
+      res.send('User login successful! <br><a href="/dashboard">Go to Dashboard</a>');
+    }
   } else {
     res.send('Invalid credentials. Please try again.');
   }
@@ -110,7 +116,7 @@ router.post('/register', (req, res) => {
     return res.send('User already exists.');
   }
 
-  users[username] = password;
+  users[username] = { password, role: 'user' };  // Default role is 'user'
   res.send('User registered successfully! <br><a href="/">Go to Login</a>');
 });
 
@@ -130,3 +136,4 @@ router.post('/leave-request', (req, res) => {
 });
 
 module.exports = router;
+
