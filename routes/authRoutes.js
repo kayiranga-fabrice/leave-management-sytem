@@ -33,21 +33,32 @@ router.get('/register', (req, res) => {
 // Handle login POST request
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
+    console.log('Login attempt:', { email, password: password ? '***' : undefined });
 
     try {
         const { data, error } = await supabase.auth.signInWithPassword({
             email,
             password
         });
+        console.log('Supabase signInWithPassword:', { data, error });
 
-        if (error) throw error;
+        if (error) {
+            console.error('Supabase Auth Error:', error);
+            throw error;
+        }
 
         // Get user role from profiles table
-        const { data: profile } = await supabase
+        const { data: profile, error: profileError } = await supabase
             .from('profiles')
             .select('role')
             .eq('id', data.user.id)
             .single();
+        console.log('Profile lookup:', { profile, profileError });
+
+        if (profileError) {
+            console.error('Profile Table Error:', profileError);
+            throw profileError;
+        }
 
         if (profile?.role === 'admin') {
             res.json({
@@ -63,7 +74,8 @@ router.post('/login', async (req, res) => {
             });
         }
     } catch (error) {
-        res.status(401).json({ error: error.message });
+        console.error('Login Error:', error);
+        res.status(401).json({ error: error.message, details: error });
     }
 });
 
