@@ -3,54 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - Vermicomposting Management System</title>
+    <title>Join the Movement for a Greener Planet | VermiTech</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/theme.css">
     <style>
         .hero {
             background: linear-gradient(135deg, #1a472a, #2d5a27);
             color: white;
             padding: 100px 0;
         }
-        .feature-card {
-            transition: transform 0.3s;
-            border: none;
-            border-radius: 15px;
+        
+        .voice-assistant-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
         }
-        .feature-card:hover {
-            transform: translateY(-10px);
+        
+        .voice-assistant-container button {
+            margin-bottom: 10px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
         }
-        .feature-icon {
-            font-size: 2.5rem;
+        
+        .voice-assistant-container button.active {
+            background-color: #1a472a !important;
+            transform: scale(1.05);
+        }
+        
+        .voice-assistant-container .voice-status {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+        
+        .voice-assistant-container .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .voice-assistant-container .mic-icon {
+            font-size: 1.5rem;
             color: #2d5a27;
-            margin-bottom: 1rem;
         }
+        
+        .voice-assistant-container .mic-anim {
+            width: 4px;
+            height: 12px;
+            background: #2d5a27;
+            border-radius: 2px;
+            margin: 0 2px;
+            animation: micPulse 1.5s infinite ease-in-out;
+        }
+        
+        .voice-assistant-container .mic-anim:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .voice-assistant-container .mic-anim:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes micPulse {
+            0%, 100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        
+        .voice-assistant-container .status-text {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            display: block;
+            text-align: center;
+        }
+        
         .cta-section {
             background-color: #f8f9fa;
             padding: 80px 0;
         }
+        
         .btn-custom {
             padding: 12px 30px;
             border-radius: 30px;
             font-weight: 600;
         }
+        
         .btn-primary {
             background-color: #2d5a27;
             border-color: #2d5a27;
         }
+        
         .btn-primary:hover {
             background-color: #1a472a;
             border-color: #1a472a;
         }
+        
         .btn-outline-primary {
             color: #2d5a27;
             border-color: #2d5a27;
         }
+        
         .btn-outline-primary:hover {
             background-color: #2d5a27;
             border-color: #2d5a27;
         }
     </style>
+        
 </head>
 <body>
     <!-- Navigation -->
@@ -80,19 +149,61 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero d-flex align-items-center" style="min-height: 80vh;">
+    <div class="container text-center">
+        <div class="mb-4">
+            <span style="display:inline-block;background:rgba(255,255,255,0.08);border-radius:20px;padding:20px;">
+                <i class="fas fa-robot fa-4x text-success"></i>
+            </span>
+        </div>
+        <h1 class="display-3 fw-bold mb-3">AI-Powered Vermicomposting Monitor</h1>
+        <p class="lead mb-4" style="max-width:600px;margin:auto;">
+            Transform your composting process with real-time camera analysis, AI-driven insights, and actionable recommendations for a greener planet.
+        </p>
+        <a href="#features" class="btn btn-success btn-lg px-5 py-3 fw-bold shadow">Try the Demo</a>
+    </div>
+</section>
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="display-4 fw-bold mb-4">Transform Waste into Gold</h1>
-                    <p class="lead mb-4">Manage your vermicomposting operation with precision and ease. Track worms, monitor conditions, and maximize your harvest.</p>
-                    <div class="d-flex gap-3">
-                        <a href="/auth/register" class="btn btn-light btn-custom">Get Started</a>
-                        <a href="/auth/login" class="btn btn-outline-light btn-custom">Sign In</a>
+                    <h1 class="display-4 fw-bold mb-4">Join the Movement for a Greener Planet</h1>
+                    <p class="lead mb-4">Empowering communities to turn waste into resources, fight climate change, and create a sustainable future—one compost bin at a time.</p>
+                    <div class="d-flex gap-3 flex-wrap mb-3">
+                        <a href="/auth/register" class="btn btn-success btn-custom">Get Involved</a>
+                        <a href="#newsletter" class="btn btn-outline-success btn-custom">Get Monthly Eco-Tips</a>
+                        <a href="#donate" class="btn btn-warning btn-custom"><i class="fas fa-donate me-2"></i>Donate Now</a>
+                    </div>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="#features" class="btn btn-outline-primary btn-custom">Start Composting</a>
+                        <a href="#about" class="btn btn-outline-secondary btn-custom">Read More</a>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <img src="https://via.placeholder.com/600x400" alt="Vermicomposting" class="img-fluid rounded-3 shadow">
+                <div class="col-lg-6 text-center">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Nature" class="img-fluid rounded-3 shadow mb-3" style="max-height:340px;object-fit:cover;">
+                    <div class="bg-light rounded-3 p-3 shadow d-inline-block mt-2">
+                        <span class="fw-bold text-success">🌱 <span id="impact-counter">1,253</span> kg</span> organic waste composted!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission/About Section -->
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Eco Action" class="img-fluid rounded-3 shadow">
+                </div>
+                <div class="col-md-6">
+                    <h2 class="fw-bold mb-3">Our Mission</h2>
+                    <p class="mb-3">VermiTech is dedicated to advancing environmental stewardship through innovative composting solutions. Our platform helps individuals, schools, and organizations manage organic waste, grow healthy soil, and build greener communities.</p>
+                    <ul class="list-unstyled mb-4">
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Reduce landfill waste and emissions</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Promote soil health and biodiversity</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Empower eco-friendly habits</li>
+                    </ul>
+                    <a href="#features" class="btn btn-success btn-custom">Explore Our Projects</a>
                 </div>
             </div>
         </div>
@@ -143,12 +254,13 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
+    <!-- Donation Section -->
+    <section id="donate" class="py-5">
         <div class="container text-center">
-            <h2 class="mb-4">Ready to Start?</h2>
-            <p class="lead mb-4">Join our community of vermicomposting enthusiasts and take your operation to the next level.</p>
-            <a href="/authenticator" class="btn btn-primary btn-custom">Access Portal</a>
+            <h2 class="fw-bold mb-3">Support Our Mission</h2>
+            <p class="mb-4">Your donation helps us plant more trees, educate more people, and build a greener world.</p>
+            <a href="#" class="btn btn-warning btn-lg"><i class="fas fa-donate me-2"></i>Donate with PayPal</a>
+            <div class="text-muted mt-2">(Demo only)</div>
         </div>
     </section>
 
@@ -168,5 +280,11 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="voice-assistant-container">
+        <button id="voiceToggle" class="btn btn-primary btn-custom">
+            <i class="fas fa-microphone me-2"></i>
+            Voice Assistant
+        </button>
+    </div>
 </body>
 </html>
