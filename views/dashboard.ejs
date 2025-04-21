@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%- contentFor('title') %>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+    <%- contentFor('stylesheets') %>
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .metric-card {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            background: white;
+        }
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .metric-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .chart-container {
+            height: 250px;
+        }
+        .task-item {
+            border-left: 3px solid #28a745;
+            padding: 8px;
+            margin-bottom: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .env-metric {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .soil-metric {
+            display: inline-block;
+            width: calc(50% - 10px);
+            margin: 5px;
+            padding: 10px;
+            text-align: center;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="/">Vermicomposting Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bins">Bins</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/feeding">Feeding</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/harvests">Harvests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analytics">Analytics</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="row g-3">
+            <!-- Key Metrics Cards -->
+            <div class="col-md-3 col-sm-6">
+                <div class="metric-card p-3">
+                    <div class="metric-label">Total Area</div>
+                    <div class="metric-value" id="totalArea">- m²</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="metric-card p-3">
+                    <div class="metric-label">Active Beds</div>
+                    <div class="metric-value" id="totalBeds">-</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="metric-card p-3">
+                    <div class="metric-label">Total Yield</div>
+                    <div class="metric-value" id="totalYield">- kg</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="metric-card p-3">
+                    <div class="metric-label">Revenue</div>
+                    <div class="metric-value" id="totalRevenue">$-</div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="col-md-6">
+                <div class="metric-card p-3">
+                    <h6 class="mb-3">Monthly Production</h6>
+                    <div class="chart-container">
+                        <canvas id="productionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="metric-card p-3">
+                    <h6 class="mb-3">Yield by Bed</h6>
+                    <div class="chart-container">
+                        <canvas id="yieldChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Row -->
+            <div class="col-md-4">
+                <div class="metric-card p-3">
+                    <h6 class="mb-3">Tasks & Reminders</h6>
+                    <div id="tasksList"></div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="metric-card p-3">
+                    <h6 class="mb-3">Environmental Status</h6>
+                    <div class="env-metric">
+                        <span>Temperature</span>
+                        <span id="currentTemp" class="fw-bold">- °C</span>
+                    </div>
+                    <div class="env-metric">
+                        <span>Humidity</span>
+                        <span id="currentHumidity" class="fw-bold">- %</span>
+                    </div>
+                    <div class="env-metric">
+                        <span>Moisture</span>
+                        <span id="currentMoisture" class="fw-bold">- %</span>
+                    </div>
+                    <div id="envAlerts" class="mt-3"></div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="metric-card p-3">
+                    <h6 class="mb-3">Soil Analysis</h6>
+                    <div class="soil-metric">
+                        <div class="metric-label">pH</div>
+                        <div id="soilPH" class="fw-bold">-</div>
+                    </div>
+                    <div class="soil-metric">
+                        <div class="metric-label">Organic Matter</div>
+                        <div id="organicMatter" class="fw-bold">- %</div>
+                    </div>
+                    <div class="soil-metric">
+                        <div class="metric-label">C/N Ratio</div>
+                        <div id="cnRatio" class="fw-bold">-</div>
+                    </div>
+                    <div class="soil-metric">
+                        <div class="metric-label">Moisture</div>
+                        <div id="moistureContent" class="fw-bold">- %</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <%- contentFor('scripts') %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Function to initialize charts
+        function initializeCharts() {
+            // Compost Production Chart
+            const productionCtx = document.getElementById('productionChart').getContext('2d');
+            new Chart(productionCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Expected',
+                        data: [0, 0, 0, 0, 0, 0],
+                        borderColor: '#28a745',
+                        borderDash: [5, 5],
+                        tension: 0.4
+                    }, {
+                        label: 'Actual',
+                        data: [0, 0, 0, 0, 0, 0],
+                        borderColor: '#007bff',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            align: 'end',
+                            labels: {
+                                boxWidth: 15,
+                                usePointStyle: true,
+                                padding: 15
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: true,
+                                color: 'rgba(0,0,0,0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Yield per Bed Chart
+            const yieldCtx = document.getElementById('yieldChart').getContext('2d');
+            new Chart(yieldCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Bed 1', 'Bed 2', 'Bed 3', 'Bed 4', 'Bed 5'],
+                    datasets: [{
+                        label: 'Yield (kg)',
+                        data: [0, 0, 0, 0, 0],
+                        backgroundColor: 'rgba(40, 167, 69, 0.8)',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: true,
+                                color: 'rgba(0,0,0,0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to fetch and update dashboard data
+        async function updateDashboard() {
+            try {
+                const response = await fetch('/api/vermicomposting/dashboard');
+                const data = await response.json();
+                
+                // Update key metrics
+                document.getElementById('totalArea').textContent = `${data.totalArea} m²`;
+                document.getElementById('totalBeds').textContent = data.totalBeds;
+                document.getElementById('totalYield').textContent = `${data.totalYield} kg`;
+                document.getElementById('totalRevenue').textContent = `$${data.totalRevenue}`;
+
+                // Update environmental alerts
+                const alertsHtml = data.environmentalAlerts.map(alert => `
+                    <div class="alert alert-${alert.type} mb-2 py-2 px-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bx ${alert.type === 'warning' ? 'bx-error' : 'bx-error-circle'} me-2"></i>
+                            <div>
+                                <strong class="d-block">${alert.title}</strong>
+                                <small>${alert.message}</small>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                document.getElementById('envAlerts').innerHTML = alertsHtml;
+
+                // Update tasks
+                const tasksHtml = data.tasks.map(task => `
+                    <div class="task-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">${task.title}</h6>
+                                <small class="text-muted d-block">${task.description}</small>
+                            </div>
+                            <small class="text-success">${task.dueDate}</small>
+                        </div>
+                    </div>
+                `).join('');
+                document.getElementById('tasksList').innerHTML = tasksHtml;
+
+                // Update environmental conditions
+                document.getElementById('currentTemp').textContent = `${data.environmental.temperature}°C`;
+                document.getElementById('currentHumidity').textContent = `${data.environmental.humidity}%`;
+                document.getElementById('currentMoisture').textContent = `${data.environmental.moisture}%`;
+
+                // Update soil analysis
+                document.getElementById('soilPH').textContent = data.soil.ph;
+                document.getElementById('organicMatter').textContent = `${data.soil.organicMatter}%`;
+                document.getElementById('cnRatio').textContent = data.soil.cnRatio;
+                document.getElementById('moistureContent').textContent = `${data.soil.moistureContent}%`;
+
+                // Update charts with new data
+                // This would update the charts with actual data from the API
+            } catch (error) {
+                console.error('Error updating dashboard:', error);
+            }
+        }
+
+        // Initialize charts and start updates
+        initializeCharts();
+        updateDashboard();
+        setInterval(updateDashboard, 300000); // Update every 5 minutes
+    </script>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bin Management - Vermicomposting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Vermicomposting Bins</h2>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addBinModal">
+                <i class="bx bx-plus"></i> Add New Bin
+            </button>
+        </div>
+
+        <div class="row" id="binsList">
+            <!-- Bins will be dynamically inserted here -->
+        </div>
+
+        <!-- Add Bin Modal -->
+        <div class="modal fade" id="addBinModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add New Bin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addBinForm">
+                            <div class="mb-3">
+                                <label class="form-label">Bin Name</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Setup Date</label>
+                                <input type="date" class="form-control" name="setup_date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Initial Worm Population</label>
+                                <input type="number" class="form-control" name="worm_population" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Current Temperature (°C)</label>
+                                <input type="number" step="0.1" class="form-control" name="current_temperature">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Current Moisture Level (%)</label>
+                                <input type="number" step="0.1" class="form-control" name="current_moisture_level">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Current pH Level</label>
+                                <input type="number" step="0.1" class="form-control" name="current_ph_level">
+                            </div>
+                            <button type="submit" class="btn btn-success">Create Bin</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to load and display bins
+        async function loadBins() {
+            try {
+                const response = await fetch('/api/vermicomposting/bins');
+                const bins = await response.json();
+                
+                const binsHtml = bins.map(bin => `
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${bin.name}</h5>
+                                <p class="card-text">
+                                    <strong>Setup Date:</strong> ${new Date(bin.setup_date).toLocaleDateString()}<br>
+                                    <strong>Worm Population:</strong> ${bin.worm_population}<br>
+                                    <strong>Temperature:</strong> ${bin.current_temperature}°C<br>
+                                    <strong>Moisture:</strong> ${bin.current_moisture_level}%<br>
+                                    <strong>pH Level:</strong> ${bin.current_ph_level}
+                                </p>
+                                <div class="btn-group">
+                                    <button class="btn btn-primary btn-sm" onclick="viewBinDetails('${bin.id}')">
+                                        <i class="bx bx-show"></i> View
+                                    </button>
+                                    <button class="btn btn-warning btn-sm" onclick="updateBin('${bin.id}')">
+                                        <i class="bx bx-edit"></i> Edit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('binsList').innerHTML = binsHtml;
+            } catch (error) {
+                console.error('Error loading bins:', error);
+            }
+        }
+
+        // Handle new bin form submission
+        document.getElementById('addBinForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const binData = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/api/vermicomposting/bins', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(binData)
+                });
+                
+                if (response.ok) {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addBinModal'));
+                    modal.hide();
+                    loadBins();
+                    e.target.reset();
+                }
+            } catch (error) {
+                console.error('Error creating bin:', error);
+            }
+        });
+
+        // Load bins when page loads
+        loadBins();
+    </script>
+</body>
+</html>

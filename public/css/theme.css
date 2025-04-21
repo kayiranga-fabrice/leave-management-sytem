@@ -1,0 +1,101 @@
+/* Light Theme (Default) */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --border-color: rgba(0,0,0,0.1);
+    --card-bg: #ffffff;
+    --chart-grid: rgba(0,0,0,0.05);
+    --success-light: rgba(40, 167, 69, 0.1);
+    --nav-bg: #28a745;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --bg-primary: #1a1d21;
+    --bg-secondary: #242830;
+    --text-primary: #e9ecef;
+    --text-secondary: #adb5bd;
+    --border-color: rgba(255,255,255,0.1);
+    --card-bg: #242830;
+    --chart-grid: rgba(255,255,255,0.05);
+    --success-light: rgba(40, 167, 69, 0.2);
+    --nav-bg: #1e4b2d;
+}
+
+/* Global Styles */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Card Styles */
+.analytics-card, .harvest-card, .feeding-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+/* Text Colors */
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+/* Navbar */
+.navbar-dark {
+    background-color: var(--nav-bg) !important;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    background-color: var(--bg-primary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Modal */
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+}
+
+/* Record Items */
+.record-item, .metric-card {
+    background-color: var(--bg-secondary);
+}
+
+/* Progress Bars */
+.progress {
+    background-color: var(--bg-secondary);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Chart Overrides */
+[data-theme="dark"] .chart-container canvas {
+    filter: brightness(0.8);
+}

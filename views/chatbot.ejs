@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vermicomposting Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .chat-container {
+            height: 70vh;
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        .user-message {
+            background: #2d5a27;
+            color: white;
+            margin-left: auto;
+        }
+        .bot-message {
+            background: white;
+            border: 1px solid #dee2e6;
+        }
+        .typing-indicator {
+            display: none;
+            color: #6c757d;
+        }
+        .chat-input {
+            border-radius: 20px;
+            padding: 10px 20px;
+        }
+        .send-button {
+            border-radius: 20px;
+            padding: 10px 25px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1a472a;">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-seedling me-2"></i>
+                VermiTech
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/chatbot">AI Assistant</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="text-center mb-4">
+                    <i class="fas fa-robot me-2"></i>
+                    Vermicomposting AI Assistant
+                </h2>
+                
+                <div class="chat-container mb-3" id="chatContainer">
+                    <div class="message bot-message">
+                        Hello! I'm your vermicomposting assistant. How can I help you today? Feel free to ask about:
+                        <ul>
+                            <li>Worm care and feeding</li>
+                            <li>Bin maintenance</li>
+                            <li>Troubleshooting issues</li>
+                            <li>Harvesting techniques</li>
+                            <li>Best practices</li>
+                        </ul>
+                    </div>
+                    <div class="typing-indicator">
+                        <i class="fas fa-ellipsis-h"></i> AI is thinking...
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" class="form-control chat-input" id="userInput" 
+                           placeholder="Type your question here..." 
+                           aria-label="Chat message">
+                    <button class="btn btn-primary send-button" type="button" id="sendButton">
+                        <i class="fas fa-paper-plane me-2"></i>Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.getElementById('chatContainer');
+            const userInput = document.getElementById('userInput');
+            const sendButton = document.getElementById('sendButton');
+            const typingIndicator = document.querySelector('.typing-indicator');
+
+            function addMessage(content, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+                messageDiv.textContent = content;
+                chatContainer.insertBefore(messageDiv, typingIndicator);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            async function sendMessage() {
+                const message = userInput.value.trim();
+                if (!message) return;
+
+                // Add user message
+                addMessage(message, true);
+                userInput.value = '';
+
+                // Show typing indicator
+                typingIndicator.style.display = 'block';
+
+                try {
+                    console.log('Sending message:', message);
+                    const response = await fetch('/chatbot/ask', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ message })
+                    });
+
+                    console.log('Response status:', response.status);
+                    const data = await response.json();
+                    console.log('Response data:', data);
+
+                    if (data.error) {
+                        throw new Error(data.error + (data.details ? ': ' + data.details : ''));
+                    }
+
+                    // Add bot response
+                    addMessage(data.reply);
+                } catch (error) {
+                    const errorMessage = 'Error: ' + (error.message || 'Unknown error occurred');
+                    addMessage(errorMessage);
+                    console.error('Detailed error:', error);
+                } finally {
+                    typingIndicator.style.display = 'none';
+                }
+            }
+
+            sendButton.addEventListener('click', sendMessage);
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

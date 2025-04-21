@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Vermicomposting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Vermicomposting System Test Interface</h1>
+
+        <!-- Authentication Tests -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Authentication Tests</h3>
+            </div>
+            <div class="card-body">
+                <form id="authForm" class="mb-3">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" value="test@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" value="password123">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Test Authentication</button>
+                </form>
+                <div id="authResult" class="alert alert-info d-none"></div>
+            </div>
+        </div>
+
+        <!-- Bin Management Tests -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Bin Management Tests</h3>
+            </div>
+            <div class="card-body">
+                <form id="binForm" class="mb-3">
+                    <div class="mb-3">
+                        <label for="binName" class="form-label">Bin Name</label>
+                        <input type="text" class="form-control" id="binName" value="Test Bin">
+                    </div>
+                    <div class="mb-3">
+                        <label for="wormPopulation" class="form-label">Worm Population</label>
+                        <input type="number" class="form-control" id="wormPopulation" value="1000">
+                    </div>
+                    <button type="submit" class="btn btn-success">Test Bin Creation</button>
+                </form>
+                <div id="binResult" class="alert alert-info d-none"></div>
+            </div>
+        </div>
+
+        <!-- Feeding Record Tests -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Feeding Record Tests</h3>
+            </div>
+            <div class="card-body">
+                <form id="feedingForm" class="mb-3">
+                    <div class="mb-3">
+                        <label for="feedType" class="form-label">Feed Type</label>
+                        <input type="text" class="form-control" id="feedType" value="Kitchen Scraps">
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity (kg)</label>
+                        <input type="number" step="0.1" class="form-control" id="quantity" value="2.5">
+                    </div>
+                    <button type="submit" class="btn btn-warning">Test Feeding Record</button>
+                </form>
+                <div id="feedingResult" class="alert alert-info d-none"></div>
+            </div>
+        </div>
+
+        <!-- Harvest Record Tests -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Harvest Record Tests</h3>
+            </div>
+            <div class="card-body">
+                <form id="harvestForm" class="mb-3">
+                    <div class="mb-3">
+                        <label for="harvestQuantity" class="form-label">Harvest Quantity (kg)</label>
+                        <input type="number" step="0.1" class="form-control" id="harvestQuantity" value="5.0">
+                    </div>
+                    <div class="mb-3">
+                        <label for="quality" class="form-label">Quality Rating (1-5)</label>
+                        <input type="number" min="1" max="5" class="form-control" id="quality" value="4">
+                    </div>
+                    <button type="submit" class="btn btn-info">Test Harvest Record</button>
+                </form>
+                <div id="harvestResult" class="alert alert-info d-none"></div>
+            </div>
+        </div>
+
+        <!-- Environmental Data Tests -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>Environmental Data Tests</h3>
+            </div>
+            <div class="card-body">
+                <form id="envForm" class="mb-3">
+                    <div class="mb-3">
+                        <label for="temperature" class="form-label">Temperature (°C)</label>
+                        <input type="number" step="0.1" class="form-control" id="temperature" value="25.5">
+                    </div>
+                    <div class="mb-3">
+                        <label for="moisture" class="form-label">Moisture Level (%)</label>
+                        <input type="number" step="0.1" class="form-control" id="moisture" value="70.0">
+                    </div>
+                    <div class="mb-3">
+                        <label for="ph" class="form-label">pH Level</label>
+                        <input type="number" step="0.1" class="form-control" id="ph" value="7.0">
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Test Environmental Data</button>
+                </form>
+                <div id="envResult" class="alert alert-info d-none"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to show results
+        function showResult(elementId, data) {
+            const element = document.getElementById(elementId);
+            element.textContent = JSON.stringify(data, null, 2);
+            element.classList.remove('d-none');
+        }
+
+        // Authentication test
+        document.getElementById('authForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/test/test-auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value
+                    })
+                });
+                const data = await response.json();
+                showResult('authResult', data);
+            } catch (error) {
+                showResult('authResult', { error: error.message });
+            }
+        });
+
+        // Bin test
+        document.getElementById('binForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/test/test-bin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: document.getElementById('binName').value,
+                        wormPopulation: document.getElementById('wormPopulation').value
+                    })
+                });
+                const data = await response.json();
+                showResult('binResult', data);
+            } catch (error) {
+                showResult('binResult', { error: error.message });
+            }
+        });
+
+        // Feeding test
+        document.getElementById('feedingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/test/test-feeding', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        feedType: document.getElementById('feedType').value,
+                        quantity: document.getElementById('quantity').value
+                    })
+                });
+                const data = await response.json();
+                showResult('feedingResult', data);
+            } catch (error) {
+                showResult('feedingResult', { error: error.message });
+            }
+        });
+
+        // Harvest test
+        document.getElementById('harvestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/test/test-harvest', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        quantity: document.getElementById('harvestQuantity').value,
+                        quality: document.getElementById('quality').value
+                    })
+                });
+                const data = await response.json();
+                showResult('harvestResult', data);
+            } catch (error) {
+                showResult('harvestResult', { error: error.message });
+            }
+        });
+
+        // Environmental data test
+        document.getElementById('envForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/test/test-environmental', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        temperature: document.getElementById('temperature').value,
+                        moisture: document.getElementById('moisture').value,
+                        ph: document.getElementById('ph').value
+                    })
+                });
+                const data = await response.json();
+                showResult('envResult', data);
+            } catch (error) {
+                showResult('envResult', { error: error.message });
+            }
+        });
+    </script>
+</body>
+</html>

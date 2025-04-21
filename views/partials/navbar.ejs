@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container">
+        <a class="navbar-brand" href="/dashboard">
+            <i class="bx bx-leaf"></i> Vermicomposting
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">
+                        <i class="bx bxs-dashboard"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/bins">
+                        <i class="bx bx-box"></i> Bins
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/feeding">
+                        <i class="bx bx-food-menu"></i> Feeding
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/harvests">
+                        <i class="bx bx-basket"></i> Harvests
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/analytics">
+                        <i class="bx bx-line-chart"></i> Analytics
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav align-items-center">
+                <li class="nav-item me-3">
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <i id="themeIcon" class="bx bx-moon"></i>
+                    </button>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="bx bx-user"></i> Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                        <li><a class="dropdown-item" href="/settings">Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
