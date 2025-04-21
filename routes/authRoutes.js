@@ -22,12 +22,12 @@ const requireAuth = async (req, res, next) => {
 
 // Login page route
 router.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', { layout: 'layout' });
 });
 
 // Register page route
 router.get('/register', (req, res) => {
-    res.render('register');
+    res.render('register', { layout: 'layout' });
 });
 
 // Handle login POST request
