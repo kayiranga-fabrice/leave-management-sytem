@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - VermiTech</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center p-5">
+                        <h1 class="text-danger mb-4">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Oops! Something went wrong
+                        </h1>
+                        <p class="lead mb-4"><%= message %></p>
+                        <% if (error && error.stack) { %>
+                            <div class="alert alert-danger text-start">
+                                <pre class="mb-0"><%= error.stack %></pre>
+                            </div>
+                        <% } %>
+                        <a href="/" class="btn btn-primary">Return to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Twilio Client Test</title>
+    <script src="//sdk.twilio.com/js/client/v1.3/twilio.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Twilio Client Test</h1>
+    <div class="controls">
+        <button id="call">Call</button>
+        <button id="hangup">Hang Up</button>
+    </div>
+    <div class="status" id="status">Ready to call</div>
+
+    <script>
+        // Fetch capability token from server
+        fetch('/token')
+            .then(response => response.json())
+            .then(data => {
+                // Twilio Client setup
+                Twilio.Device.setup(data.token, {
+                    debug: true
+                });
+            })
+            .catch(error => {
+                document.getElementById('status').innerHTML = "Error fetching token: " + error;
+            });
+
+        // Event handlers
+        Twilio.Device.ready(function (device) {
+            document.getElementById('status').innerHTML = "Ready to call";
+        });
+
+        Twilio.Device.error(function (error) {
+            document.getElementById('status').innerHTML = "Error: " + error.message;
+        });
+
+        Twilio.Device.connect(function (conn) {
+            document.getElementById('status').innerHTML = "Connected";
+        });
+
+        Twilio.Device.disconnect(function (conn) {
+            document.getElementById('status').innerHTML = "Disconnected";
+        });
+
+        // Button handlers
+        document.getElementById('call').onclick = function () {
+            Twilio.Device.connect();
+        };
+
+        document.getElementById('hangup').onclick = function () {
+            Twilio.Device.disconnectAll();
+        };
+    </script>
+</body>
+</html> 

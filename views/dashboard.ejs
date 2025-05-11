@@ -3,342 +3,497 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%- contentFor('title') %>Dashboard</title>
+    <title>Dashboard - VermiTech</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
-    <%- contentFor('stylesheets') %>
-    <style>
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .metric-card {
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            height: 100%;
-            background: white;
-        }
-        .metric-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #28a745;
-        }
-        .metric-label {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-        .chart-container {
-            height: 250px;
-        }
-        .task-item {
-            border-left: 3px solid #28a745;
-            padding: 8px;
-            margin-bottom: 8px;
-            background-color: #f8f9fa;
-            border-radius: 4px;
-        }
-        .env-metric {
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            background-color: #f8f9fa;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .soil-metric {
-            display: inline-block;
-            width: calc(50% - 10px);
-            margin: 5px;
-            padding: 10px;
-            text-align: center;
-            background-color: #f8f9fa;
-            border-radius: 6px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <div class="container">
-            <a class="navbar-brand" href="/">Vermicomposting Management</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/bins">Bins</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/feeding">Feeding</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/harvests">Harvests</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/analytics">Analytics</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="dashboard-container">
-        <div class="row g-3">
-            <!-- Key Metrics Cards -->
-            <div class="col-md-3 col-sm-6">
-                <div class="metric-card p-3">
-                    <div class="metric-label">Total Area</div>
-                    <div class="metric-value" id="totalArea">- m²</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="metric-card p-3">
-                    <div class="metric-label">Active Beds</div>
-                    <div class="metric-value" id="totalBeds">-</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="metric-card p-3">
-                    <div class="metric-label">Total Yield</div>
-                    <div class="metric-value" id="totalYield">- kg</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="metric-card p-3">
-                    <div class="metric-label">Revenue</div>
-                    <div class="metric-value" id="totalRevenue">$-</div>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-md-4 mb-4">
+                <div class="sidebar">
+                    <div class="text-center mb-4">
+                        <h4 class="mb-0">VermiTech</h4>
+                        <p class="text-muted mb-0">Vermicomposting Dashboard</p>
+                    </div>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/dashboard">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/bins">
+                                <i class="fas fa-box"></i> My Bins
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/feeding">
+                                <i class="fas fa-utensils"></i> Feeding
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/harvests">
+                                <i class="fas fa-harvest"></i> Harvests
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/reports">
+                                <i class="fas fa-chart-line"></i> Reports
+                            </a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a href="/auth/logout" class="nav-link text-danger">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Charts Row -->
-            <div class="col-md-6">
-                <div class="metric-card p-3">
-                    <h6 class="mb-3">Monthly Production</h6>
-                    <div class="chart-container">
-                        <canvas id="productionChart"></canvas>
+            <!-- Main Content -->
+            <div class="col-lg-9 col-md-8">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="mb-1">Welcome back, <%= user.name || user.email.split('@')[0] || 'User' %></h2>
+                        <p class="text-muted mb-0">Here's what's happening with your vermicomposting system</p>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle me-1"></i> My Account
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="/settings"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="/auth/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="metric-card p-3">
-                    <h6 class="mb-3">Yield by Bed</h6>
-                    <div class="chart-container">
-                        <canvas id="yieldChart"></canvas>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Bottom Row -->
-            <div class="col-md-4">
-                <div class="metric-card p-3">
-                    <h6 class="mb-3">Tasks & Reminders</h6>
-                    <div id="tasksList"></div>
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="stats-card" style="background: linear-gradient(135deg, #2d5a27, #3a7d44);">
+                            <i class="fas fa-box"></i>
+                            <h3><%= stats.totalBins || '0' %></h3>
+                            <p>Total Bins</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="stats-card" style="background: linear-gradient(135deg, #17a2b8, #2d9bbd);">
+                            <i class="fas fa-thermometer-half"></i>
+                            <h3><%= user.bins && user.bins[0]?.sensor_data?.temperature ? `${user.bins[0].sensor_data.temperature}°C` : 'N/A' %></h3>
+                            <p>Temperature</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="stats-card" style="background: linear-gradient(135deg, #ffc107, #ffab00);">
+                            <i class="fas fa-tint"></i>
+                            <h3><%= user.bins && user.bins[0]?.sensor_data?.humidity ? `${user.bins[0].sensor_data.humidity}%` : 'N/A' %></h3>
+                            <p>Humidity</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="stats-card" style="background: linear-gradient(135deg, #dc3545, #c82333);">
+                            <i class="fas fa-leaf"></i>
+                            <h3><%= user.bins && user.bins[0]?.sensor_data?.moisture ? `${user.bins[0].sensor_data.moisture}%` : 'N/A' %></h3>
+                            <p>Moisture</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-4">
-                <div class="metric-card p-3">
-                    <h6 class="mb-3">Environmental Status</h6>
-                    <div class="env-metric">
-                        <span>Temperature</span>
-                        <span id="currentTemp" class="fw-bold">- °C</span>
+                <!-- Main Content -->
+                <div class="row">
+                    <!-- Bins Overview -->
+                    <div class="col-lg-8 mb-4">
+                        <div class="dashboard-card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">My Bins</h5>
+                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addBinModal">
+                                    <i class="fas fa-plus me-1"></i> Add New Bin
+                                </button>
+                            </div>
+                            <div class="card-body p-0">
+                                <% if (user.bins && user.bins.length > 0) { %>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover align-middle mb-0">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th>Bin Name</th>
+                                                    <th>Status</th>
+                                                    <th>Temperature</th>
+                                                    <th>Humidity</th>
+                                                    <th>Moisture</th>
+                                                    <th>Last Update</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% user.bins.forEach(bin => { %>
+                                                    <tr>
+                                                        <td class="fw-bold"><%= bin.name %></td>
+                                                        <td>
+                                                            <span class="badge bg-<%= bin.status === 'active' ? 'success' : 'secondary' %>">
+                                                                <%= bin.status || 'Inactive' %>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="fas fa-thermometer-half me-2 text-<%= bin.sensor_data?.temperature > 30 ? 'danger' : 'success' %>"></i>
+                                                                <%= bin.sensor_data?.temperature ? `${bin.sensor_data.temperature}°C` : 'N/A' %>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="fas fa-tint me-2 text-info"></i>
+                                                                <%= bin.sensor_data?.humidity ? `${bin.sensor_data.humidity}%` : 'N/A' %>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="fas fa-leaf me-2 text-success"></i>
+                                                                <%= bin.sensor_data?.moisture ? `${bin.sensor_data.moisture}%` : 'N/A' %>
+                                                            </div>
+                                                        </td>
+                                                        <td><%= bin.sensor_data?.recorded_at ? new Date(bin.sensor_data.recorded_at).toLocaleString() : 'Never' %></td>
+                                                        <td>
+                                                            <div class="btn-group btn-group-sm">
+                                                                <a href="/bins/<%= bin.id %>" class="btn btn-outline-primary">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </a>
+                                                                <button class="btn btn-outline-secondary">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <% } else { %>
+                                    <div class="text-center p-4">
+                                        <div class="bg-light p-4 rounded-3">
+                                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                            <h5 class="text-muted mb-3">No bins found</h5>
+                                            <p class="text-muted mb-3">Create your first bin to start monitoring your vermicomposting system</p>
+                                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBinModal">
+                                                <i class="fas fa-plus me-1"></i> Create First Bin
+                                            </button>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
                     </div>
-                    <div class="env-metric">
-                        <span>Humidity</span>
-                        <span id="currentHumidity" class="fw-bold">- %</span>
+
+                    <!-- Quick Actions -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Quick Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <a href="/feedings/new" class="btn btn-outline-primary w-100 mb-2">
+                                    <i class="fas fa-utensils me-2"></i>Record Feeding
+                                </a>
+                                <a href="/harvests/new" class="btn btn-outline-success w-100 mb-2">
+                                    <i class="fas fa-harvest me-2"></i>Record Harvest
+                                </a>
+                                <a href="/bins/new" class="btn btn-outline-info w-100 mb-2">
+                                    <i class="fas fa-plus-circle me-2"></i>Add New Bin
+                                </a>
+                                <a href="/reports" class="btn btn-outline-secondary w-100">
+                                    <i class="fas fa-chart-bar me-2"></i>View Reports
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="dashboard-card mt-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">Recent Activity</h5>
+                            </div>
+                            <div class="card-body">
+                                <% if (user.activities && user.activities.length > 0) { %>
+                                    <div class="list-group list-group-flush">
+                                        <% user.activities.forEach(activity => { %>
+                                            <div class="list-group-item border-0 px-0 py-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="bg-light rounded-circle p-2 text-primary">
+                                                            <i class="fas fa-<%= activity.type === 'feeding' ? 'utensils' : activity.type === 'harvest' ? 'weight-hanging' : 'bell' %>"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        <p class="mb-0 small"><%= activity.message || 'New activity' %></p>
+                                                        <small class="text-muted"><%= activity.date || new Date().toLocaleDateString() %></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% }); %>
+                                    </div>
+                                <% } else { %>
+                                    <div class="text-center py-3">
+                                        <i class="fas fa-inbox fa-2x text-muted mb-2"></i>
+                                        <p class="text-muted mb-0">No recent activity</p>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
                     </div>
-                    <div class="env-metric">
-                        <span>Moisture</span>
-                        <span id="currentMoisture" class="fw-bold">- %</span>
-                    </div>
-                    <div id="envAlerts" class="mt-3"></div>
                 </div>
-            </div>
 
-            <div class="col-md-4">
-                <div class="metric-card p-3">
-                    <h6 class="mb-3">Soil Analysis</h6>
-                    <div class="soil-metric">
-                        <div class="metric-label">pH</div>
-                        <div id="soilPH" class="fw-bold">-</div>
+                <!-- Charts Row -->
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="chart-container">
+                            <h5>Harvest Over Time</h5>
+                            <div id="harvestChart" style="height: 300px;">
+                                <!-- Chart will be rendered here by Chart.js -->
+                                <div class="text-center py-5">
+                                    <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">Harvest data will be displayed here</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="soil-metric">
-                        <div class="metric-label">Organic Matter</div>
-                        <div id="organicMatter" class="fw-bold">- %</div>
-                    </div>
-                    <div class="soil-metric">
-                        <div class="metric-label">C/N Ratio</div>
-                        <div id="cnRatio" class="fw-bold">-</div>
-                    </div>
-                    <div class="soil-metric">
-                        <div class="metric-label">Moisture</div>
-                        <div id="moistureContent" class="fw-bold">- %</div>
+                    <div class="col-md-6 mb-4">
+                        <div class="chart-container">
+                            <h5>Bin Health Status</h5>
+                            <div id="healthChart" style="height: 300px;">
+                                <!-- Chart will be rendered here by Chart.js -->
+                                <div class="text-center py-5">
+                                    <i class="fas fa-heartbeat fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">Health metrics will be displayed here</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="text-muted">© 2025 VermiTech. All rights reserved.</span>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-muted me-3">Privacy Policy</a>
+                    <a href="#" class="text-muted me-3">Terms of Service</a>
+                    <a href="#" class="text-muted">Help Center</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <%- contentFor('scripts') %>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Function to initialize charts
-        function initializeCharts() {
-            // Compost Production Chart
-            const productionCtx = document.getElementById('productionChart').getContext('2d');
-            new Chart(productionCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                    datasets: [{
-                        label: 'Expected',
-                        data: [0, 0, 0, 0, 0, 0],
-                        borderColor: '#28a745',
-                        borderDash: [5, 5],
-                        tension: 0.4
-                    }, {
-                        label: 'Actual',
-                        data: [0, 0, 0, 0, 0, 0],
-                        borderColor: '#007bff',
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            align: 'end',
-                            labels: {
-                                boxWidth: 15,
-                                usePointStyle: true,
-                                padding: 15
-                            }
-                        }
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+
+        // Sample chart initialization (you can replace with actual data)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Harvest Chart
+            const harvestCtx = document.getElementById('harvestChart');
+            if (harvestCtx) {
+                new Chart(harvestCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Harvest (kg)',
+                            data: [12, 15, 18, 14, 20, 25],
+                            borderColor: '#2d5a27',
+                            tension: 0.3,
+                            fill: true,
+                            backgroundColor: 'rgba(45, 90, 39, 0.1)'
+                        }]
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                display: true,
-                                color: 'rgba(0,0,0,0.05)'
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
                             }
                         },
-                        x: {
-                            grid: {
-                                display: false
+                        scales: {
+                            y: {
+                                beginAtZero: true
                             }
                         }
                     }
-                }
-            });
-
-            // Yield per Bed Chart
-            const yieldCtx = document.getElementById('yieldChart').getContext('2d');
-            new Chart(yieldCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Bed 1', 'Bed 2', 'Bed 3', 'Bed 4', 'Bed 5'],
-                    datasets: [{
-                        label: 'Yield (kg)',
-                        data: [0, 0, 0, 0, 0],
-                        backgroundColor: 'rgba(40, 167, 69, 0.8)',
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                display: true,
-                                color: 'rgba(0,0,0,0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Function to fetch and update dashboard data
-        async function updateDashboard() {
-            try {
-                const response = await fetch('/api/vermicomposting/dashboard');
-                const data = await response.json();
-                
-                // Update key metrics
-                document.getElementById('totalArea').textContent = `${data.totalArea} m²`;
-                document.getElementById('totalBeds').textContent = data.totalBeds;
-                document.getElementById('totalYield').textContent = `${data.totalYield} kg`;
-                document.getElementById('totalRevenue').textContent = `$${data.totalRevenue}`;
-
-                // Update environmental alerts
-                const alertsHtml = data.environmentalAlerts.map(alert => `
-                    <div class="alert alert-${alert.type} mb-2 py-2 px-3">
-                        <div class="d-flex align-items-center">
-                            <i class="bx ${alert.type === 'warning' ? 'bx-error' : 'bx-error-circle'} me-2"></i>
-                            <div>
-                                <strong class="d-block">${alert.title}</strong>
-                                <small>${alert.message}</small>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-                document.getElementById('envAlerts').innerHTML = alertsHtml;
-
-                // Update tasks
-                const tasksHtml = data.tasks.map(task => `
-                    <div class="task-item">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-1">${task.title}</h6>
-                                <small class="text-muted d-block">${task.description}</small>
-                            </div>
-                            <small class="text-success">${task.dueDate}</small>
-                        </div>
-                    </div>
-                `).join('');
-                document.getElementById('tasksList').innerHTML = tasksHtml;
-
-                // Update environmental conditions
-                document.getElementById('currentTemp').textContent = `${data.environmental.temperature}°C`;
-                document.getElementById('currentHumidity').textContent = `${data.environmental.humidity}%`;
-                document.getElementById('currentMoisture').textContent = `${data.environmental.moisture}%`;
-
-                // Update soil analysis
-                document.getElementById('soilPH').textContent = data.soil.ph;
-                document.getElementById('organicMatter').textContent = `${data.soil.organicMatter}%`;
-                document.getElementById('cnRatio').textContent = data.soil.cnRatio;
-                document.getElementById('moistureContent').textContent = `${data.soil.moistureContent}%`;
-
-                // Update charts with new data
-                // This would update the charts with actual data from the API
-            } catch (error) {
-                console.error('Error updating dashboard:', error);
+                });
             }
-        }
 
-        // Initialize charts and start updates
-        initializeCharts();
-        updateDashboard();
-        setInterval(updateDashboard, 300000); // Update every 5 minutes
+
+        });
     </script>
+</body>
+</html>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Welcome to Your Account</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center py-4">
+                                <i class="fas fa-check-circle text-success" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                                <h3>Account Successfully Created!</h3>
+                                <p class="lead">Thank you for joining us, <%= user.name || 'User' %>!</p>
+                                <p>Your account is all set up and ready to go. Here are some quick actions to get you started:</p>
+                                
+                                <div class="row mt-4">
+                                    <div class="col-md-4 mb-3">
+                                        <a href="/profile" class="btn btn-outline-primary w-100">
+                                            <i class="fas fa-user-edit me-2"></i>Complete Your Profile
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <a href="/settings" class="btn btn-outline-secondary w-100">
+                                            <i class="fas fa-cog me-2"></i>Account Settings
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <a href="/help" class="btn btn-outline-info w-100">
+                                            <i class="fas fa-question-circle me-2"></i>Get Help
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Quick Links</h4>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <a href="/getting-started" class="list-group-item list-group-item-action">
+                                <i class="fas fa-play-circle me-2"></i> Getting Started Guide
+                            </a>
+                            <a href="/faq" class="list-group-item list-group-item-action">
+                                <i class="fas fa-question-circle me-2"></i> Frequently Asked Questions
+                            </a>
+                            <a href="/contact" class="list-group-item list-group-item-action">
+                                <i class="fas fa-envelope me-2"></i> Contact Support
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Account Status</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3">
+                                    <i class="fas fa-user-check text-success" style="font-size: 2rem;"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">Account Verified</h5>
+                                    <p class="text-muted mb-0">Your email address is confirmed</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="fas fa-calendar-check text-primary" style="font-size: 2rem;"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">Member Since</h5>
+                                    <p class="text-muted mb-0"><%= new Date().toLocaleDateString() %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: none;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+}
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+.list-group-item-action:hover {
+    background-color: #f8f9fa;
+}
+
+.text-success {
+    color: #198754 !important;
+}
+
+.text-primary {
+    color: #0d6efd !important;
+}
+
+.text-info {
+    color: #0dcaf0 !important;
+}
+
+.lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .btn {
+        margin-bottom: 10px;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+</style>
+
+<%- include('partials/footer') %>

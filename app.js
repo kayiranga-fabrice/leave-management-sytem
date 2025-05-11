@@ -1,6 +1,7 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
@@ -17,7 +18,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('layout', 'layout');
 app.use(expressLayouts);
 
-// Static files
+// Middleware
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,9 +27,20 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 const vermicompostingRoutes = require('./routes/vermicompostingRoutes');
 const authRoutes = require('./routes/authRoutes');
+const subscriptionRoutes = require('./routes/subscriptionRoutes');
+const voiceApi = require('./routes/voiceApi');
+const piRoutes = require('./routes/piRoutes');
 
-app.use('/', authRoutes);
+// Landing page route
+app.get('/', (req, res) => {
+    res.render('landing', { title: 'Welcome to VermiTech' });
+});
+
 app.use('/', vermicompostingRoutes);
+app.use('/auth', authRoutes);
+app.use('/', subscriptionRoutes);
+app.use('/api/voice', voiceApi);
+app.use('/', piRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {
@@ -35,7 +48,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

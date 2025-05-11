@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join the Movement for a Greener Planet | VermiTech</title>
@@ -14,89 +15,36 @@
             padding: 100px 0;
         }
         
-        .voice-assistant-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 600;
         }
         
-        .voice-assistant-container button {
-            margin-bottom: 10px;
-            padding: 0.75rem 1.5rem;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
+        .nav-link {
+            font-size: 1.3rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
         }
         
-        .voice-assistant-container button.active {
-            background-color: #1a472a !important;
-            transform: scale(1.05);
+        .btn {
+            font-size: 1.3rem !important;
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
         }
         
-        .voice-assistant-container .voice-status {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            padding: 1rem;
-            box-shadow: var(--shadow-sm);
-            text-align: center;
+        .btn-lg {
+            font-size: 1.4rem !important;
+            padding: 0.7rem 1.4rem;
         }
         
-        .voice-assistant-container .status-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 0.5rem;
-        }
-        
-        .voice-assistant-container .mic-icon {
-            font-size: 1.5rem;
-            color: #2d5a27;
-        }
-        
-        .voice-assistant-container .mic-anim {
-            width: 4px;
-            height: 12px;
-            background: #2d5a27;
-            border-radius: 2px;
-            margin: 0 2px;
-            animation: micPulse 1.5s infinite ease-in-out;
-        }
-        
-        .voice-assistant-container .mic-anim:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .voice-assistant-container .mic-anim:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes micPulse {
-            0%, 100% {
-                opacity: 0.2;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
-        
-        .voice-assistant-container .status-text {
-            color: var(--text-secondary);
-            font-size: var(--font-size-sm);
-            display: block;
-            text-align: center;
+        .btn-custom {
+            font-size: 1.3rem !important;
+            padding: 0.6rem 1.2rem;
         }
         
         .cta-section {
             background-color: #f8f9fa;
             padding: 80px 0;
-        }
-        
-        .btn-custom {
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 600;
         }
         
         .btn-primary {
@@ -118,30 +66,117 @@
             background-color: #2d5a27;
             border-color: #2d5a27;
         }
+
+        .btn {
+            font-size: 1.1rem !important;  /* Make all buttons larger */
+        }
+        .btn-lg {
+            font-size: 1.2rem !important;  /* Make large buttons even larger */
+        }
+        .btn-custom {
+            font-size: 1.1rem !important;  /* Make custom buttons larger */
+        }
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar .nav-link {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333 !important;
+            padding: 0.6rem 0.9rem;
+        }
+        .navbar .nav-link:hover {
+            color: #2d5a27 !important;
+        }
+        .btn-success {
+            background-color: #9FE635;
+            border-color: #9FE635;
+            color: #1a472a;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .btn-success:hover {
+            background-color: #8ed125;
+            border-color: #8ed125;
+            color: #1a472a;
+        }
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(45,90,39,0.8) 0%, rgba(26,71,42,0.8) 100%);
+            z-index: 1;
+        }
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+        .hover-card {
+            transition: transform 0.3s ease;
+        }
+        .hover-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            width: 60px;
+        }
+        .donation-number-box {
+            transition: all 0.3s ease;
+            border: 2px solid #2ecc71;
+            cursor: pointer;
+        }
+        
+        .donation-number-box:hover {
+            background-color: #f8fff8 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .donation-number-box h3 {
+            color: #2ecc71;
+        }
     </style>
         
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1a472a;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
         <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-seedling me-2"></i>
-                VermiTech
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <i class="fas fa-seedling fa-2x text-success me-2"></i>
+                <span style="color: #2d5a27; font-size: 1.4rem; font-weight: 600;">VermiTech</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/chatbot"><i class="fas fa-robot me-1"></i>AI Assistant</a>
+                        <a class="nav-link px-3" href="/about">ABOUT</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/auth/login">Login</a>
+                        <a class="nav-link px-3" href="/services">SERVICES</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/auth/register">Register</a>
+                        <a class="nav-link px-3" href="/projects">PROJECTS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="/chatbot"><i class="fas fa-robot me-1"></i>AI ASSISTANT</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="/auth/login">LOGIN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="/auth/register">SIGN UP</a>
                     </li>
                 </ul>
             </div>
@@ -149,39 +184,76 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero d-flex align-items-center" style="min-height: 80vh;">
-    <div class="container text-center">
-        <div class="mb-4">
-            <span style="display:inline-block;background:rgba(255,255,255,0.08);border-radius:20px;padding:20px;">
-                <i class="fas fa-robot fa-4x text-success"></i>
-            </span>
+    <section class="hero position-relative" style="min-height: 85vh; background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center;">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-lg-8 text-white">
+                    <h1 class="display-4 mb-4" style="font-family: 'Quicksand', sans-serif; color: #9FE635; font-size: 3.5rem;">
+                        Make An Impact
+                    </h1>
+                    <h2 class="display-5 fw-bold mb-4" style="font-size: 2.8rem;">
+                        AI-Powered Vermicomposting Monitor
+                    </h2>
+                    <p class="lead mb-5" style="font-size: 1.4rem; max-width: 600px;">
+                        Transform your composting process with real-time camera analysis, AI-driven insights, and actionable recommendations.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <button id="welcomeButton" class="btn btn-light btn-lg px-4" onclick="playWelcome()">
+                            <i class="fas fa-volume-up me-2"></i>AI Voice Assistant
+                        </button>
+                        <a href="/auth/register" class="btn btn-warning btn-lg px-4">Get Started</a>
+                        <a href="/chatbot" class="btn btn-success btn-lg px-4">
+                            <i class="fas fa-robot me-2"></i>AI Assistant
+                        </a>
+                    </div>
+                    <audio id="welcomeAudio" style="display: none;">
+                        <source src="/audio/welcome.mp3" type="audio/mpeg">
+                    </audio>
+                    <div id="welcomeStatus" class="mt-4 text-white" style="font-size: 1.1rem;"></div>
+                </div>
+            </div>
         </div>
-        <h1 class="display-3 fw-bold mb-3">AI-Powered Vermicomposting Monitor</h1>
-        <p class="lead mb-4" style="max-width:600px;margin:auto;">
-            Transform your composting process with real-time camera analysis, AI-driven insights, and actionable recommendations for a greener planet.
-        </p>
-        <a href="#features" class="btn btn-success btn-lg px-5 py-3 fw-bold shadow">Try the Demo</a>
-    </div>
-</section>
+        <div class="position-absolute bottom-0 start-0 w-100 py-3 bg-white bg-opacity-15">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="text-white mb-0 contact-info" style="font-size: 1.2rem;">
+                            <i class="far fa-clock me-2"></i>
+                            <span class="fw-semibold">Monday-Friday:</span> 8:00 am to 5:00 pm
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="mailto:info@vermitech.com" class="text-white text-decoration-none contact-info" style="font-size: 1.2rem;">
+                            <i class="fas fa-envelope me-2"></i>
+                            <span class="fw-semibold">info@vermitech.com</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-4">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="display-4 fw-bold mb-4">Join the Movement for a Greener Planet</h1>
-                    <p class="lead mb-4">Empowering communities to turn waste into resources, fight climate change, and create a sustainable future—one compost bin at a time.</p>
-                    <div class="d-flex gap-3 flex-wrap mb-3">
-                        <a href="/auth/register" class="btn btn-success btn-custom">Get Involved</a>
-                        <a href="#newsletter" class="btn btn-outline-success btn-custom">Get Monthly Eco-Tips</a>
-                        <a href="#donate" class="btn btn-warning btn-custom"><i class="fas fa-donate me-2"></i>Donate Now</a>
+                    <h1 class="display-4 fw-bold mb-3" style="font-size: 2.8rem;">Join the Movement for a Greener Planet</h1>
+                    <p class="lead mb-3" style="font-size: 1.4rem;">Empowering communities to turn waste into resources, fight climate change, and create a sustainable future.</p>
+                    <div class="d-flex gap-2 flex-wrap mb-2">
+                        <a href="/auth/register" class="btn btn-success btn-sm">Get Involved</a>
+                        <a href="#newsletter" class="btn btn-outline-success btn-sm">Get Monthly Eco-Tips</a>
+                        <a href="#donate" class="btn btn-warning btn-sm"><i class="fas fa-donate me-2"></i>Donate Now</a>
                     </div>
-                    <div class="d-flex gap-3 flex-wrap">
-                        <a href="#features" class="btn btn-outline-primary btn-custom">Start Composting</a>
-                        <a href="#about" class="btn btn-outline-secondary btn-custom">Read More</a>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="#features" class="btn btn-outline-primary btn-sm">Start Composting</a>
+                        <a href="#about" class="btn btn-outline-secondary btn-sm">Read More</a>
                     </div>
                 </div>
                 <div class="col-lg-6 text-center">
-                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Nature" class="img-fluid rounded-3 shadow mb-3" style="max-height:340px;object-fit:cover;">
-                    <div class="bg-light rounded-3 p-3 shadow d-inline-block mt-2">
-                        <span class="fw-bold text-success">🌱 <span id="impact-counter">1,253</span> kg</span> organic waste composted!
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Nature" class="img-fluid rounded-3 shadow mb-2" style="max-height:300px;object-fit:cover;">
+                    <div class="bg-light rounded-3 p-2 shadow d-inline-block mt-2">
+                        <span class="fw-bold text-success" style="font-size: 1.1rem;">🌱 <span id="impact-counter">1,253</span> kg</span> <span style="font-size: 1.1rem;">organic waste composted!</span>
                     </div>
                 </div>
             </div>
@@ -196,12 +268,12 @@
                     <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Eco Action" class="img-fluid rounded-3 shadow">
                 </div>
                 <div class="col-md-6">
-                    <h2 class="fw-bold mb-3">Our Mission</h2>
-                    <p class="mb-3">VermiTech is dedicated to advancing environmental stewardship through innovative composting solutions. Our platform helps individuals, schools, and organizations manage organic waste, grow healthy soil, and build greener communities.</p>
-                    <ul class="list-unstyled mb-4">
-                        <li><i class="fas fa-check-circle text-success me-2"></i>Reduce landfill waste and emissions</li>
-                        <li><i class="fas fa-check-circle text-success me-2"></i>Promote soil health and biodiversity</li>
-                        <li><i class="fas fa-check-circle text-success me-2"></i>Empower eco-friendly habits</li>
+                    <h2 class="fw-bold mb-3" style="font-size: 2.8rem;">Our Mission</h2>
+                    <p class="mb-3" style="font-size: 1.4rem;">VermiTech is dedicated to advancing environmental stewardship through innovative composting solutions. Our platform helps individuals, schools, and organizations manage organic waste, grow healthy soil, and build greener communities.</p>
+                    <ul class="list-unstyled mb-4" style="font-size: 1.4rem;">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Reduce landfill waste and emissions</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Promote soil health and biodiversity</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Empower eco-friendly habits</li>
                     </ul>
                     <a href="#features" class="btn btn-success btn-custom">Explore Our Projects</a>
                 </div>
@@ -210,43 +282,54 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-5">
+    <section class="features py-4 bg-light">
         <div class="container">
-            <h2 class="text-center mb-5">Why Choose Our System?</h2>
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="card h-100 feature-card shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="fas fa-chart-line feature-icon"></i>
-                            <h4>Smart Monitoring</h4>
-                            <p>Track temperature, moisture, and pH levels in real-time for optimal conditions.</p>
+            <div class="text-center mb-3">
+                <h6 class="text-success text-uppercase fw-bold mb-2" style="font-size: 1.2rem;">What We Do</h6>
+                <h2 class="fw-bold mb-3" style="font-size: 2.5rem;">Our Environmental Solutions</h2>
+            </div>
+            <div class="row g-3">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm hover-card">
+                        <div class="card-body text-center p-3">
+                            <div class="feature-icon mb-2">
+                                <i class="fas fa-seedling text-success"></i>
+                            </div>
+                            <h4 class="mb-2" style="font-size: 1.3rem;">Smart Composting</h4>
+                            <p class="text-muted mb-0" style="font-size: 1.1rem;">Transform organic waste into nutrient-rich soil with AI-powered monitoring.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100 feature-card shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="fas fa-bug feature-icon"></i>
-                            <h4>Worm Management</h4>
-                            <p>Monitor worm population, health, and breeding patterns effectively.</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm hover-card">
+                        <div class="card-body text-center p-3">
+                            <div class="feature-icon mb-2">
+                                <i class="fas fa-leaf text-success"></i>
+                            </div>
+                            <h4 class="mb-2" style="font-size: 1.3rem;">Eco Education</h4>
+                            <p class="text-muted mb-0" style="font-size: 1.1rem;">Learn sustainable practices and environmental conservation techniques.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100 feature-card shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="fas fa-leaf feature-icon"></i>
-                            <h4>Harvest Tracking</h4>
-                            <p>Record and analyze your vermicompost production and quality.</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm hover-card">
+                        <div class="card-body text-center p-3">
+                            <div class="feature-icon mb-2">
+                                <i class="fas fa-recycle text-success"></i>
+                            </div>
+                            <h4 class="mb-2" style="font-size: 1.3rem;">Waste Management</h4>
+                            <p class="text-muted mb-0" style="font-size: 1.1rem;">Implement efficient recycling and waste reduction strategies.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100 feature-card shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="fas fa-robot feature-icon"></i>
-                            <h4>AI Assistant</h4>
-                            <p>Get expert advice and answers to your vermicomposting questions instantly.</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card h-100 border-0 shadow-sm hover-card">
+                        <div class="card-body text-center p-3">
+                            <div class="feature-icon mb-2">
+                                <i class="fas fa-globe-americas text-success"></i>
+                            </div>
+                            <h4 class="mb-2" style="font-size: 1.3rem;">Community Impact</h4>
+                            <p class="text-muted mb-0" style="font-size: 1.1rem;">Create lasting change through local environmental initiatives.</p>
                         </div>
                     </div>
                 </div>
@@ -254,13 +337,106 @@
         </div>
     </section>
 
+    <!-- Impact Section -->
+    <section class="impact position-relative py-4">
+        <div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background: rgba(45,90,39,0.9);"></div>
+        <div class="container position-relative">
+            <div class="row text-center text-white g-3">
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-item py-3">
+                        <h2 class="fw-bold mb-1" style="font-size: 2rem; color: #9FE635;">1,253</h2>
+                        <p class="mb-0" style="font-size: 0.95rem;">Kg Waste Composted</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-item py-3">
+                        <h2 class="fw-bold mb-1" style="font-size: 2rem; color: #9FE635;">500+</h2>
+                        <p class="mb-0" style="font-size: 0.95rem;">Active Members</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-item py-3">
+                        <h2 class="fw-bold mb-1" style="font-size: 2rem; color: #9FE635;">50</h2>
+                        <p class="mb-0" style="font-size: 0.95rem;">Community Projects</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-item py-3">
+                        <h2 class="fw-bold mb-1" style="font-size: 2rem; color: #9FE635;">25</h2>
+                        <p class="mb-0" style="font-size: 0.95rem;">Partner Organizations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Donation Section -->
-    <section id="donate" class="py-5">
-        <div class="container text-center">
-            <h2 class="fw-bold mb-3">Support Our Mission</h2>
-            <p class="mb-4">Your donation helps us plant more trees, educate more people, and build a greener world.</p>
-            <a href="#" class="btn btn-warning btn-lg"><i class="fas fa-donate me-2"></i>Donate with PayPal</a>
-            <div class="text-muted mt-2">(Demo only)</div>
+    <section class="donation py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80" 
+                         alt="Save Environment" 
+                         class="img-fluid rounded-4 shadow">
+                </div>
+                <div class="col-lg-6">
+                    <h6 class="text-success text-uppercase fw-bold mb-2" style="font-size: 1.3rem;">Support Vermicomposting</h6>
+                    <h2 class="display-5 fw-bold mb-4" style="font-size: 2.5rem;">Help Us Spread Vermicomposting</h2>
+                    <p class="lead mb-4" style="font-size: 1.4rem;">Your contribution helps us provide worm bins, education, and support to communities, making sustainable waste management accessible to everyone.</p>
+                    
+                    <div class="donation-info bg-light p-4 rounded-4 mb-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="donation-option p-3 border rounded text-center">
+                                    <h5 class="mb-2" style="font-size: 0.75rem;">Starter Kit</h5>
+                                    <h3 class="text-success mb-2" style="font-size: 1rem;">5,000 RWF</h3>
+                                    <p class="small text-muted" style="font-size: 0.6rem;">Provides one family with a basic worm composting setup</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="donation-option p-3 border rounded text-center">
+                                    <h5 class="mb-2" style="font-size: 0.75rem;">Community Kit</h5>
+                                    <h3 class="text-success mb-2" style="font-size: 1rem;">15,000 RWF</h3>
+                                    <p class="small text-muted" style="font-size: 0.6rem;">Supports a community garden with vermicomposting</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Hidden donation number section -->
+                        <div id="donationNumber" class="contact-info mt-4" style="display: none;">
+                            <div class="alert alert-success">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-phone fa-2x text-success me-3"></i>
+                                    <div>
+                                        <h5 class="mb-1" style="font-size: 0.75rem;">Donation Number (MTN Mobile Money)</h5>
+                                        <a href="tel:+250784538491" class="text-decoration-none">
+                                            <div class="donation-number-box p-2 rounded bg-white mb-2 d-inline-block">
+                                                <h3 class="mb-0 text-success" style="font-size: 1rem;">
+                                                    <i class="fas fa-phone-alt me-2"></i>+250784538491
+                                                </h3>
+                                            </div>
+                                        </a>
+                                        <div class="mt-2">
+                                            <button onclick="copyNumber()" class="btn btn-sm btn-outline-success me-2" style="font-size: 0.6rem;">
+                                                <i class="fas fa-copy me-1"></i>Copy Number
+                                            </button>
+                                            <span id="copyMessage" class="text-success" style="display: none; font-size: 0.6rem;">
+                                                <i class="fas fa-check me-1"></i>Copied!
+                                            </span>
+                                        </div>
+                                        <p class="small mb-0 mt-2" style="font-size: 0.6rem;">Click to call or copy the number</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="showDonationNumber()" class="btn btn-success btn-lg px-4" style="font-size: 0.7rem;">
+                        <i class="fas fa-hand-holding-heart me-2"></i>Donate Now
+                    </button>
+                    <p class="text-muted mt-2" style="font-size: 0.6rem;"><small>* Click the button to see the donation number</small></p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -269,22 +445,92 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0">&copy; 2025 VermiTech. All rights reserved.</p>
+                    <p class="mb-0" style="font-size: 1.2rem;">&copy; 2025 VermiTech. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <a href="#" class="text-light text-decoration-none me-3">Privacy Policy</a>
-                    <a href="#" class="text-light text-decoration-none">Terms of Service</a>
+                    <a href="#" class="text-light text-decoration-none me-3" style="font-size: 1.2rem;">Privacy Policy</a>
+                    <a href="#" class="text-light text-decoration-none" style="font-size: 1.2rem;">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <div class="voice-assistant-container">
-        <button id="voiceToggle" class="btn btn-primary btn-custom">
-            <i class="fas fa-microphone me-2"></i>
-            Voice Assistant
-        </button>
-    </div>
+    <script>
+    async function initiatePayment() {
+        const statusDiv = document.getElementById('paymentStatus');
+        statusDiv.style.display = 'block';
+        statusDiv.className = 'alert alert-info';
+        statusDiv.textContent = 'Processing payment...';
+
+        try {
+            const response = await fetch('/api/subscription/initiate-payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    phone: '0784538491',
+                    plan: 'monthly'
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                statusDiv.className = 'alert alert-success';
+                statusDiv.innerHTML = data.message.replace(/\n/g, '<br>');
+            } else {
+                statusDiv.className = 'alert alert-danger';
+                statusDiv.textContent = data.error || 'Payment failed. Please try again.';
+            }
+        } catch (error) {
+            statusDiv.className = 'alert alert-danger';
+            statusDiv.textContent = 'An error occurred. Please try again.';
+            console.error('Payment error:', error);
+        }
+    }
+
+    function playWelcome() {
+        const audio = document.getElementById('welcomeAudio');
+        const button = document.getElementById('welcomeButton');
+        
+        // Reset audio to start if it was already played
+        audio.currentTime = 0;
+        
+        // Play audio
+        audio.play();
+        
+        // Update button while playing
+        button.innerHTML = '<i class="fas fa-volume-up me-2"></i>AI Voice Assistant';
+        button.disabled = true;
+        
+        // Reset button when audio ends
+        audio.onended = function() {
+            button.innerHTML = '<i class="fas fa-volume-up me-2"></i>AI Voice Assistant';
+            button.disabled = false;
+        };
+    }
+
+    function showDonationNumber() {
+        const donationNumber = document.getElementById('donationNumber');
+        if (donationNumber.style.display === 'none') {
+            donationNumber.style.display = 'block';
+            // Smooth scroll to the number
+            donationNumber.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    function copyNumber() {
+        const number = '+250784538491';
+        navigator.clipboard.writeText(number).then(function() {
+            const copyMessage = document.getElementById('copyMessage');
+            copyMessage.style.display = 'inline';
+            setTimeout(() => {
+                copyMessage.style.display = 'none';
+            }, 2000);
+        });
+    }
+    </script>
 </body>
 </html>

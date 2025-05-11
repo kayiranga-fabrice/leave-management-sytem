@@ -2,78 +2,105 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../config/supabase');
 
-router.get('/dashboard', async (req, res) => {
+// Authentication middleware
+const requireAuth = async (req, res, next) => {
+    // Check for token in cookie or Authorization header
+    const token = req.cookies?.token || req.headers.authorization?.split(' ')[1];
+    
+    if (!token) {
+        console.log('No token found, redirecting to login');
+        return res.redirect('/auth/login');
+    }
+
     try {
-        // Get active bins count
-        const { data: bins } = await supabase
+        const { data: { user }, error } = await supabase.auth.getUser(token);
+        if (error) {
+            console.error('Token validation error:', error);
+            throw error;
+        }
+        req.user = user;
+        next();
+    } catch (error) {
+        console.error('Auth middleware error:', error);
+        res.clearCookie('token');
+        return res.redirect('/auth/login');
+    }
+};
+
+// Main dashboard route
+router.get('/', requireAuth, async (req, res) => {
+    try {
+        console.log('Dashboard route hit for user:', req.user.id);
+
+        // Get user profile
+        const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', req.user.id)
+            .single();
+
+        if (profileError) {
+            console.error('Profile fetch error:', profileError);
+            throw profileError;
+        }
+
+        if (!profile) {
+            console.error('No profile found for user:', req.user.id);
+            throw new Error('Profile not found');
+        }
+
+        // Get user's bins
+        const { data: bins, error: binsError } = await supabase
             .from('bins')
-            .select('id, worm_population')
-            .eq('status', 'active');
-
-        // Get today's feedings
-        const today = new Date().toISOString().split('T')[0];
-        const { data: feedings } = await supabase
-            .from('feeding_records')
             .select('*')
-            .gte('feeding_date', today);
+            .eq('user_id', req.user.id);
 
-        // Get total harvest
-        const { data: harvests } = await supabase
-            .from('harvests')
-            .select('quantity_kg');
+        if (binsError) {
+            console.error('Bins fetch error:', binsError);
+            throw binsError;
+        }
 
-        // Get recent activity
-        const { data: recentActivity } = await supabase
-            .from('feeding_records')
+        // Get recent activities
+        const { data: activities, error: activitiesError } = await supabase
+            .from('activities')
             .select('*')
-            .order('feeding_date', { ascending: false })
+            .eq('user_id', req.user.id)
+            .order('created_at', { ascending: false })
             .limit(5);
 
-        // Get environmental alerts
-        const { data: environmentalData } = await supabase
-            .from('environmental_data')
-            .select('*')
-            .order('recorded_at', { ascending: false })
-            .limit(5);
+        if (activitiesError) {
+            console.error('Activities fetch error:', activitiesError);
+            throw activitiesError;
+        }
 
-        // Calculate dashboard data
-        const dashboardData = {
-            activeBins: bins.length,
-            totalWorms: bins.reduce((sum, bin) => sum + (bin.worm_population || 0), 0),
-            todayFeedings: feedings.length,
-            totalHarvest: harvests.reduce((sum, harvest) => sum + harvest.quantity_kg, 0),
-            recentActivity: recentActivity.map(activity => ({
-                title: 'Feeding Record',
-                time: new Date(activity.feeding_date).toLocaleString(),
-                description: `Fed ${activity.quantity_kg}kg of ${activity.feed_type}`
-            })),
-            environmentalAlerts: environmentalData
-                .filter(data => {
-                    // Add alert conditions
-                    const tempAlert = data.temperature < 15 || data.temperature > 30;
-                    const moistureAlert = data.moisture_level < 60 || data.moisture_level > 80;
-                    const phAlert = data.ph_level < 6 || data.ph_level > 8;
-                    return tempAlert || moistureAlert || phAlert;
-                })
-                .map(data => ({
-                    type: 'warning',
-                    title: 'Environmental Alert',
-                    time: new Date(data.recorded_at).toLocaleString(),
-                    message: `Bin ${data.bin_id}: ${
-                        data.temperature < 15 ? 'Temperature too low' :
-                        data.temperature > 30 ? 'Temperature too high' :
-                        data.moisture_level < 60 ? 'Moisture too low' :
-                        data.moisture_level > 80 ? 'Moisture too high' :
-                        data.ph_level < 6 ? 'pH too acidic' :
-                        'pH too alkaline'
-                    }`
-                }))
+        console.log('Rendering dashboard with data:', {
+            profileId: profile.id,
+            binsCount: bins.length,
+            activitiesCount: activities.length
+        });
+
+        // Prepare stats
+        const stats = {
+            totalBins: bins?.length || 0,
+            activeBins: bins?.filter(bin => bin.status === 'active').length || 0,
+            needsAttention: bins?.filter(bin => bin.needs_attention).length || 0
         };
 
-        res.json(dashboardData);
+        res.render('dashboard', {
+            user: {
+                ...profile,
+                bins: bins || [],
+                activities: (activities || []).map(activity => ({
+                    ...activity,
+                    date: new Date(activity.created_at).toLocaleDateString()
+                }))
+            },
+            stats: stats,
+            layout: 'layout'
+        });
     } catch (error) {
-        console.error('Dashboard error:', error);
-        res.status(500).json({ error: error.message });
+        console.error('Dashboard Error:', error);
+        res.redirect('/auth/login');
     }
 });
 

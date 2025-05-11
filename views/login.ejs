@@ -1,128 +1,433 @@
-<%- contentFor('title') %>Login
+<title><%= typeof title !== 'undefined' ? title : 'Login' %></title>
 
-<%- contentFor('stylesheets') %>
 <style>
-    .login-container {
-        min-height: calc(100vh - 56px);
+    :root {
+        --color-bg: #f7f9fa;
+        --color-primary: #207567;
+        --color-border: #e0e0e0;
+        --font-size-base: 15px;
+        --font-size-sm: 13px;
+    }
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 2rem;
+        background: var(--color-bg);
+    }
+    .login-container {
+        width: 100vw;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-bg);
     }
     .login-card {
+        max-width: 380px;
         width: 100%;
-        max-width: 400px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+        background: #fff;
+        padding: 2.5rem 2rem 2rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
     }
-    .login-header {
+    .login-card h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
+        color: #207567;
+        letter-spacing: 0.5px;
     }
-    .login-header img {
-        width: 64px;
-        margin-bottom: 1rem;
+    .form-label {
+        font-size: var(--font-size-sm);
+        font-weight: 500;
+        color: #207567;
+        margin-bottom: 0.25rem;
+        margin-top: 0.5rem;
+    }
+    .form-control {
+        font-size: var(--font-size-base);
+        border-radius: 8px;
+        border: 1px solid var(--color-border);
+        margin-bottom: 0.5rem;
+        padding: 0.8rem 1rem;
+        outline: none;
+        transition: border 0.2s;
+        background: #f8fafb;
+    }
+    .form-control:focus {
+        border: 1.5px solid #207567;
+        background: #fff;
+    }
+    .btn-login {
+        width: 100%;
+        border-radius: 999px;
+        font-size: var(--font-size-base);
+        padding: 12px 0;
+        background: var(--color-primary);
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        transition: background 0.2s, box-shadow 0.2s;
+        margin: 1rem 0 0.5rem 0;
+        box-shadow: 0 2px 8px rgba(32,117,103,0.07);
+        letter-spacing: 0.2px;
+    }
+    .btn-login:hover {
+        background: #15594d;
+        box-shadow: 0 4px 14px rgba(32,117,103,0.13);
+    }
+    .login-footer {
+        text-align: center;
+        margin-top: 1.2rem;
+        font-size: var(--font-size-sm);
+        color: #888;
+    }
+    .login-footer a {
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .login-footer a:hover {
+        text-decoration: underline;
+    }
+    @media (max-width: 480px) {
+        .login-card {
+            padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+            max-width: 98vw;
+        }
+        .login-card h2 {
+            font-size: 1.2rem;
+        }
     }
 </style>
 
-<%- contentFor('body') %>
-<div class="login-container">
-    <div class="login-card card">
-        <div class="card-body p-4">
-            <div class="login-header">
-                <i class="bx bx-leaf text-success" style="font-size: 48px;"></i>
-                <h2>Welcome Back</h2>
-                <p class="text-muted">Sign in to your account</p>
-            </div>
-            <form id="loginForm">
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bx bx-lock-alt"></i></span>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="remember">
-                    <label class="form-check-label" for="remember">Remember me</label>
-                </div>
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-success">
-                        <i class="bx bx-log-in-circle me-2"></i> Sign In
-                    </button>
-                </div>
-                <div class="text-center mt-4">
-                    <p class="mb-0">Don't have an account? <a href="/register" class="text-success">Register</a></p>
-                </div>
-            </form>
+<style>
+    body.login-bg {
+        background: linear-gradient(120deg, #e9f5ec 0%, #e2eafc 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .login-card-custom {
+        border-radius: 18px;
+        box-shadow: 0 6px 32px rgba(32,117,103,0.08);
+        background: #fff;
+        padding: 2.2rem 2rem 2rem 2rem;
+        margin-top: 2rem;
+    }
+    .login-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .login-logo i {
+        font-size: 2.8rem;
+        color: #207567;
+    }
+    .login-heading {
+        font-weight: 700;
+        color: #207567;
+        letter-spacing: 0.5px;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+    .login-subheading {
+        color: #888;
+        text-align: center;
+        margin-bottom: 1.7rem;
+        font-size: 1rem;
+    }
+    .show-password-toggle {
+        cursor: pointer;
+        font-size: 0.95em;
+        color: #207567;
+        margin-left: 6px;
+    }
+    .btn-login-main {
+        background: linear-gradient(90deg, #207567 60%, #2d5a27 100%);
+        border: none;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding: 0.9rem 0;
+        box-shadow: 0 2px 8px rgba(32,117,103,0.10);
+        transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-login-main:hover {
+        background: #15594d;
+        box-shadow: 0 4px 14px rgba(32,117,103,0.13);
+    }
+    .login-footer-link {
+        color: #207567;
+        font-weight: 500;
+        text-decoration: none;
+        margin: 0 0.3rem;
+    }
+    .login-footer-link:hover {
+        text-decoration: underline;
+    }
+    .back-to-landing {
+        display: block;
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #aaa;
+        font-size: 0.97rem;
+        text-decoration: none;
+    }
+    .back-to-landing:hover {
+        color: #207567;
+    }
+</style>
+<style>
+    body.login-bg {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(120deg, #e9f5ec 0%, #e2eafc 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .login-outer-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+    }
+    .login-card-custom {
+        border-radius: 18px;
+        box-shadow: 0 6px 32px rgba(32,117,103,0.08);
+        background: #fff;
+        padding: 2.2rem 2rem 2rem 2rem;
+        margin: 0;
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .login-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .login-logo i {
+        font-size: 2.8rem;
+        color: #207567;
+    }
+    .login-heading {
+        font-weight: 700;
+        color: #207567;
+        letter-spacing: 0.5px;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+    .login-subheading {
+        color: #888;
+        text-align: center;
+        margin-bottom: 1.7rem;
+        font-size: 1rem;
+        width: 100%;
+    }
+    .show-password-toggle {
+        cursor: pointer;
+        font-size: 0.95em;
+        color: #207567;
+        margin-left: 6px;
+    }
+    .btn-login-main {
+        background: linear-gradient(90deg, #207567 60%, #2d5a27 100%);
+        border: none;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding: 0.9rem 0;
+        box-shadow: 0 2px 8px rgba(32,117,103,0.10);
+        transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-login-main:hover {
+        background: #15594d;
+        box-shadow: 0 4px 14px rgba(32,117,103,0.13);
+    }
+    .login-footer-link {
+        color: #207567;
+        font-weight: 500;
+        text-decoration: none;
+        margin: 0 0.3rem;
+    }
+    .login-footer-link:hover {
+        text-decoration: underline;
+    }
+    .back-to-landing {
+        display: block;
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #aaa;
+        font-size: 0.97rem;
+        text-decoration: none;
+    }
+    .back-to-landing:hover {
+        color: #207567;
+    }
+    @media (max-width: 600px) {
+        .login-card-custom {
+            padding: 1.2rem 0.6rem 1.2rem 0.6rem;
+            max-width: 97vw;
+        }
+    }
+</style>
+<body class="login-bg">
+<div class="login-outer-wrapper">
+    <div class="login-card-custom">
+        <div class="login-logo">
+            <i class="fas fa-seedling"></i>
+        </div>
+        <div class="login-heading">Welcome Back!</div>
+        <div class="login-subheading">Sign in to your VermiTech account</div>
+        <div id="errorAlert" class="alert alert-danger d-none" role="alert"></div>
+        <form id="loginForm" autocomplete="on" style="width:100%">
+    <div class="mb-3">
+        <div class="d-flex flex-column align-items-stretch" style="width:100%">
+            <label for="email" class="form-label" style="text-align:left; padding-left:2px;">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required autofocus style="width:100%;">
         </div>
     </div>
+    <div class="mb-3">
+        <div class="d-flex flex-column align-items-stretch" style="width:100%">
+            <label for="password" class="form-label" style="text-align:left; padding-left:2px;">Password</label>
+            <div class="input-group" style="width:100%;">
+                <input type="password" class="form-control" id="password" name="password" required style="width:100%;">
+                <span class="input-group-text bg-white show-password-toggle" id="togglePassword"><i class="fas fa-eye"></i></span>
+            </div>
+        </div>
+    </div>
+            <div class="d-grid mb-2">
+                <button type="submit" class="btn btn-login-main">Login</button>
+            </div>
+            <div class="text-center mt-2">
+                <a href="/auth/register" class="login-footer-link">Don't have an account? Register</a>
+                <span>|</span>
+                <a href="/" class="login-footer-link">Back to Home</a>
+            </div>
+        </form>
+        <a href="/" class="back-to-landing"><i class="fas fa-arrow-left"></i> Return to Landing Page</a>
+    </div>
 </div>
-
-<%- contentFor('scripts') %>
 <script>
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const submitButton = e.target.querySelector('button[type="submit"]');
-        
-        try {
-            // Disable button and show loading state
-            submitButton.disabled = true;
-            submitButton.innerHTML = '<i class="bx bx-loader-alt bx-spin me-2"></i> Signing in...';
+    // Show/hide password toggle
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const pwd = document.getElementById('password');
+        const icon = this.querySelector('i');
+        if (pwd.type === 'password') {
+            pwd.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            pwd.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+</script>
 
-            const response = await fetch('/login', {
+<script>
+    // Show/hide password toggle
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const pwd = document.getElementById('password');
+        const icon = this.querySelector('i');
+        if (pwd.type === 'password') {
+            pwd.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            pwd.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+</script>
+
+
+<script>
+    const errorAlert = document.getElementById('errorAlert');
+    const loginForm = document.getElementById('loginForm');
+    function showError(message) {
+        errorAlert.textContent = message;
+        errorAlert.classList.remove('d-none');
+    }
+    function hideError() {
+        errorAlert.classList.add('d-none');
+    }
+
+    const submitButton = document.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.innerHTML;
+
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideError();
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!email || !password) {
+            showError('Please fill in all fields');
+            return;
+        }
+
+        // Show loading state
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Logging in...';
+
+        try {
+            console.log('Sending login request...');
+            const response = await fetch('/auth/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({ email, password })
             });
 
             const data = await response.json();
+            console.log('Login response:', data);
 
-            if (response.ok) {
-                // Store the token and user role
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('userRole', data.role);
-                
-                // Show success message before redirect
-                submitButton.classList.remove('btn-success');
-                submitButton.classList.add('btn-success');
-                submitButton.innerHTML = '<i class="bx bx-check me-2"></i> Success!';
-                
-                // Redirect after a short delay
-                setTimeout(() => {
-                    window.location.href = data.redirect;
-                }, 500);
+            if (response.ok && data.success) {
+                // Store token in localStorage
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    // Set the token in a cookie for server-side auth
+                    document.cookie = `token=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=lax`;
+                }
+
+                // Redirect to the appropriate dashboard
+                window.location.href = data.redirect || '/dashboard';
             } else {
-                throw new Error(data.error || 'Login failed');
+                showError(data.error || data.message || 'Login failed. Please check your credentials.');
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
             }
         } catch (error) {
             console.error('Login error:', error);
-            
-            // Reset button state
+            showError('Network error. Please check your connection and try again.');
             submitButton.disabled = false;
-            submitButton.innerHTML = '<i class="bx bx-log-in-circle me-2"></i> Sign In';
-            
-            // Show error alert
-            const alertHtml = `
-                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                    <i class="bx bx-error-circle me-2"></i> ${error.message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            `;
-            e.target.insertAdjacentHTML('afterbegin', alertHtml);
+            submitButton.innerHTML = originalButtonText;
         }
     });
 </script>
-

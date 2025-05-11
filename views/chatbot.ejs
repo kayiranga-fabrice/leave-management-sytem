@@ -9,37 +9,82 @@
     <style>
         .chat-container {
             height: 70vh;
-            background: #f8f9fa;
-            border-radius: 10px;
+            background: #f7f9fa;
+            border-radius: 16px;
             overflow-y: auto;
-            padding: 20px;
+            padding: 32px 18px 24px 18px;
+            box-shadow: 0 4px 18px rgba(40,60,60,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
         .message {
-            margin-bottom: 15px;
-            padding: 10px 15px;
-            border-radius: 15px;
-            max-width: 80%;
+            margin-bottom: 0;
+            padding: 14px 18px;
+            border-radius: 16px;
+            max-width: 85%;
+            word-break: break-word;
+            font-size: 1.08rem;
+            box-shadow: 0 2px 8px rgba(60,60,60,0.04);
+            line-height: 1.56;
+            display: inline-block;
         }
         .user-message {
-            background: #2d5a27;
-            color: white;
+            background: linear-gradient(90deg, #2d5a27 60%, #3fa47a 100%);
+            color: #fff;
             margin-left: auto;
+            border-bottom-right-radius: 6px;
+            border-top-right-radius: 18px;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
+            text-align: right;
         }
         .bot-message {
-            background: white;
-            border: 1px solid #dee2e6;
+            background: #fffbe8;
+            border: 1px solid #e5e6e9;
+            color: #1a2c2c;
+            border-bottom-left-radius: 6px;
+            border-top-right-radius: 18px;
+            border-top-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            text-align: left;
+        }
+        .message ul {
+            margin: 12px 0 0 18px;
+            padding-left: 18px;
+            padding-bottom: 8px;
+        }
+        .message li {
+            margin-bottom: 4px;
+            font-size: 1.04em;
+            line-height: 1.6;
         }
         .typing-indicator {
             display: none;
             color: #6c757d;
+            font-style: italic;
+            font-size: 1rem;
+            margin-left: 8px;
         }
         .chat-input {
             border-radius: 20px;
-            padding: 10px 20px;
+            padding: 12px 20px;
+            font-size: 1rem;
         }
         .send-button {
             border-radius: 20px;
-            padding: 10px 25px;
+            padding: 12px 28px;
+            font-size: 1rem;
+        }
+        @media (max-width: 600px) {
+            .chat-container {
+                padding: 10px 2vw 16px 2vw;
+                height: 55vh;
+            }
+            .message {
+                font-size: 0.98rem;
+                padding: 10px 10px;
+            }
         }
     </style>
 </head>
@@ -115,10 +160,38 @@
             const typingIndicator = document.querySelector('.typing-indicator');
 
             function addMessage(content, isUser = false) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
-                messageDiv.textContent = content;
-                chatContainer.insertBefore(messageDiv, typingIndicator);
+                // If it's a bot message, enhance formatting
+                if (!isUser) {
+                    // Split on 'User:' and 'Assistant:' for multi-turn rendering
+                    if (/User:/i.test(content) && /Assistant:/i.test(content)) {
+                        // Split into user and assistant parts
+                        const userMatch = content.match(/User:(.*?)(Assistant:|$)/is);
+                        const assistantMatch = content.match(/Assistant:(.*)/is);
+                        if (userMatch && userMatch[1]) {
+                            addMessage(userMatch[1].trim(), true);
+                        }
+                        if (assistantMatch && assistantMatch[1]) {
+                            addMessage(assistantMatch[1].trim(), false);
+                        }
+                        return;
+                    }
+                    // Convert markdown-style lists to HTML lists
+                    let html = content
+                        .replace(/\n?- ([^\n]+)/g, '<li>$1</li>')
+                        .replace(/\n/g, '<br>');
+                    if (/<li>/.test(html)) {
+                        html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+                    }
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'message bot-message';
+                    messageDiv.innerHTML = html;
+                    chatContainer.insertBefore(messageDiv, typingIndicator);
+                } else {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'message user-message';
+                    messageDiv.textContent = content;
+                    chatContainer.insertBefore(messageDiv, typingIndicator);
+                }
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
 

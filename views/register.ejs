@@ -3,93 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Vermicomposting Management System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Register - Leave Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .register-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .form-control:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+        }
+        .btn-primary {
+            background-color: #4e73df;
+            border-color: #4e73df;
+            padding: 10px 0;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            border-color: #2653d4;
+            transform: translateY(-2px);
+        }
+        .form-label {
+            font-weight: 600;
+            color: #5a5c69;
+        }
+        .register-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .register-header h1 {
+            font-weight: 700;
+            color: #4e73df;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .register-header p {
+            color: #858796;
+        }
+        .input-group-text {
+            background-color: #4e73df;
+            color: white;
+            border-color: #4e73df;
+        }
+        .alert {
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #858796;
+        }
+        .login-link a {
+            color: #4e73df;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .password-toggle {
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
     <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6 col-lg-4">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h2 class="text-center mb-4">Register</h2>
-                        <div id="errorAlert" class="alert alert-danger d-none" role="alert"></div>
-                        <form id="registerForm">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required minlength="6">
-                                <small class="text-muted">Password must be at least 6 characters long</small>
-                            </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-success">Register</button>
-                            </div>
-                            <div class="text-center mt-3">
-                                <a href="/auth" class="text-decoration-none">Already have an account? Login</a>
-                            </div>
-                        </form>
+        <div class="register-container">
+            <div class="register-header">
+                <h1>Create Account</h1>
+                <p>Join our vermicomposting management system</p>
+            </div>
+            
+            <div id="alertContainer" class="alert alert-danger d-none" role="alert"></div>
+            
+            <form id="registerForm">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
                     </div>
+                    <div class="invalid-feedback" id="nameError"></div>
                 </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="invalid-feedback" id="emailError"></div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Create a password" required>
+                        <span class="input-group-text password-toggle" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                    <div class="invalid-feedback" id="passwordError"></div>
+                    <div class="form-text">Password must be at least 6 characters long</div>
+                </div>
+                
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary" id="submitButton">
+                        Create Account
+                    </button>
+                </div>
+            </form>
+            
+            <div class="login-link">
+                Already have an account? <a href="/auth/login">Sign In</a>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const errorAlert = document.getElementById('errorAlert');
-        const registerForm = document.getElementById('registerForm');
-
-        function showError(message) {
-            errorAlert.textContent = message;
-            errorAlert.classList.remove('d-none');
-        }
-
-        function hideError() {
-            errorAlert.classList.add('d-none');
-        }
-
-        registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            hideError();
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const registerForm = document.getElementById('registerForm');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const alertContainer = document.getElementById('alertContainer');
+            const submitButton = document.getElementById('submitButton');
+            const togglePassword = document.getElementById('togglePassword');
             
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            // Basic validation
-            if (password.length < 6) {
-                showError('Password must be at least 6 characters long');
-                return;
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+            
+            // Show error message in alert container
+            function showAlert(message) {
+                alertContainer.textContent = message;
+                alertContainer.classList.remove('d-none');
             }
-
-            try {
-                const response = await fetch('/auth/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ name, email, password })
-                });
-
-                const data = await response.json();
-                console.log('Registration response:', data);
-
-                if (response.ok) {
-                    alert(data.message);
-                    window.location.href = '/auth'; // Redirect to login page
-                } else {
-                    showError(data.error || 'Registration failed. Please try again.');
+            
+            // Hide alert
+            function hideAlert() {
+                alertContainer.classList.add('d-none');
+            }
+            
+            // Show field error
+            function showFieldError(input, errorElement, message) {
+                input.classList.add('is-invalid');
+                errorElement.textContent = message;
+            }
+            
+            // Clear field error
+            function clearFieldError(input, errorElement) {
+                input.classList.remove('is-invalid');
+                errorElement.textContent = '';
+            }
+            
+            // Clear all form errors
+            function clearAllErrors() {
+                hideAlert();
+                clearFieldError(nameInput, nameError);
+                clearFieldError(emailInput, emailError);
+                clearFieldError(passwordInput, passwordError);
+            }
+            
+            // Validate form
+            function validateForm() {
+                let isValid = true;
+                clearAllErrors();
+                
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                
+                // Validate name
+                if (!name || name.length < 2) {
+                    showFieldError(nameInput, nameError, 'Name must be at least 2 characters long');
+                    isValid = false;
                 }
-            } catch (error) {
-                console.error('Registration error:', error);
-                showError('Network error. Please check your connection and try again.');
+                
+                // Validate email
+                if (!email || !email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i)) {
+                    showFieldError(emailInput, emailError, 'Please enter a valid email address');
+                    isValid = false;
+                }
+                
+                // Validate password
+                if (!password || password.length < 6) {
+                    showFieldError(passwordInput, passwordError, 'Password must be at least 6 characters long');
+                    isValid = false;
+                }
+                
+                return isValid;
             }
+            
+            // Handle form submission
+            registerForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                
+                if (!validateForm()) {
+                    return;
+                }
+                
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                
+                // Update button state
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Creating account...';
+                
+                try {
+                    const response = await fetch('/auth/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name, email, password })
+                    });
+                    
+                    const data = await response.json();
+                    console.log('Registration response:', data);
+                    
+                    if (response.ok && data.success) {
+                        console.log('Registration successful, redirecting...');
+                        
+                        // Store token in localStorage if provided
+                        if (data.token) {
+                            localStorage.setItem('token', data.token);
+                        }
+                        
+                        // Set token in cookie
+                        document.cookie = `token=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}`;
+                        
+                        // Show success message briefly before redirect
+                        alertContainer.textContent = 'Account created successfully! Redirecting...';
+                        alertContainer.classList.remove('alert-danger');
+                        alertContainer.classList.add('alert-success');
+                        alertContainer.classList.remove('d-none');
+                        
+                        // Wait a bit for the cookie to be set
+                        setTimeout(() => {
+                            // Redirect to dashboard
+                            window.location.href = data.redirect || '/dashboard';
+                        }, 1000);
+                    } else {
+                        // Show error message
+                        showAlert(data.error || 'Registration failed. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    showAlert('Network error. Please check your connection and try again.');
+                } finally {
+                    // Reset button state
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Create Account';
+                }
+            });
         });
     </script>
 </body>

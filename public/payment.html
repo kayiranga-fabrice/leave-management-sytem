@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Our Mission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        .payment-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .message {
+            color: #34495e;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .phone-number {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+        .provider {
+            color: #7f8c8d;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        .plan {
+            font-weight: bold;
+            color: #27ae60;
+            margin: 15px 0;
+            font-size: 1.2em;
+        }
+        .donate-btn {
+            background-color: #27ae60;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .donate-btn:hover {
+            background-color: #219a52;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h1 class="title">Support Our Mission</h1>
+        <div class="message">
+            Your donation helps us plant more trees, educate more people, and build a greener world.
+        </div>
+        <div class="phone-number">0784538491</div>
+        <div class="provider">MTN</div>
+        <div class="plan">Monthly (1500 RWF)</div>
+        <button class="donate-btn" onclick="initiatePayment()">Donate Now</button>
+        <div id="status" class="status"></div>
+    </div>
+
+    <script>
+        async function initiatePayment() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'status';
+            statusDiv.textContent = 'Processing payment...';
+
+            try {
+                const response = await fetch('http://localhost:3000/api/subscription/initiate-payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phone: '0784538491',
+                        plan: 'monthly'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    statusDiv.className = 'status success';
+                    statusDiv.innerHTML = data.message.replace(/\n/g, '<br>');
+                } else {
+                    statusDiv.className = 'status error';
+                    statusDiv.textContent = data.error || 'Payment failed. Please try again.';
+                }
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = 'An error occurred. Please try again.';
+                console.error('Payment error:', error);
+            }
+        }
+    </script>
+</body>
+</html> 

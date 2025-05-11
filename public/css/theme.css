@@ -1,12 +1,12 @@
 /* Light Theme (Default) */
 :root {
     --font-family: 'Helvetica', Arial, sans-serif;
-    --font-size-base: 0.2rem;
-    --font-size-h1: 0.4rem;
-    --font-size-h2: 0.3rem;
-    --font-size-h3: 0.25rem;
-    --font-size-btn: 0.22rem;
-    --font-size-sm: 0.18rem;
+    --font-size-base: 0.25rem;
+    --font-size-h1: 0.45rem;
+    --font-size-h2: 0.35rem;
+    --font-size-h3: 0.3rem;
+    --font-size-btn: 0.28rem;
+    --font-size-sm: 0.22rem;
 
     /* Background Colors */
     --bg-primary: #f5f7fa;
@@ -147,7 +147,8 @@ a:hover {
     font-size: var(--font-size-btn);
     border-radius: var(--border-radius);
     transition: var(--transition);
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
 }
 
 .btn-primary {
@@ -379,6 +380,9 @@ a:hover {
 .navbar-dark .nav-link {
     color: rgba(255, 255, 255, 0.8);
     transition: var(--transition);
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
 }
 
 .navbar-dark .nav-link:hover {

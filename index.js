@@ -1,52 +1,62 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5001;
 require('dotenv').config();
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
+}));
 app.set('view engine', 'ejs');
+
+// Serve static files from public directory
+app.use(express.static('public'));
 
 // Import routes
 const publicRoutes = require('./routes/publicRoutes');
-const vermicompostingRoutes = require('./routes/vermicompostingRoutes');
-const dashboardRoutes = require('./routes/dashboardRoutes');
 const authRoutes = require('./routes/authRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
 const testRoutes = require('./routes/testRoutes');
 const adminRoutes = require('./routes/createAdmin');
-
+const subscriptionRoutes = require('./routes/subscriptionRoutes');
 const testApiRoutes = require('./routes/testApi');
-
-// Public routes must come first
-app.use('/', publicRoutes);
+const paypackWebhook = require('./routes/paypackWebhook');
 
 // Authentication routes
 app.use('/auth', authRoutes);
+
+// Dashboard routes (protected routes)
+app.use('/dashboard', dashboardRoutes);
+
+// Admin routes
 app.use('/admin', adminRoutes);
 
-// Protected routes (auth required)
-app.use('/api/vermicomposting', vermicompostingRoutes);
-app.use('/api/dashboard', dashboardRoutes);
-app.use('/test', testRoutes);
+// Public routes should come last
+app.use('/', publicRoutes);
 
+// Test routes
+app.use('/test', testRoutes);
 app.use('/test-api', testApiRoutes);
 
-app.get('/dashboard', (req, res) => {
-  res.render('dashboard');
-});
+// Subscription routes
+app.use('/api/subscription', subscriptionRoutes);
+
+// Paypack webhook route
+app.use('/api/paypack', paypackWebhook);
 
 // Start the server
-const host = '0.0.0.0';
-app.listen(port, host, () => {
-  console.log(`Vermicomposting Management System running at http://${host}:${port}`);
-  console.log('Local access: http://localhost:' + port);
-  const networkInterfaces = require('os').networkInterfaces();
-  for (const iface of Object.values(networkInterfaces)) {
-    for (const alias of iface) {
-      if (alias.family === 'IPv4' && !alias.internal) {
-        console.log(`Network access: http://${alias.address}:${port}`);
-      }
-    }
-  }
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
