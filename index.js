@@ -4,6 +4,7 @@ const session = require('express-session');
 const app = express();
 const port = process.env.PORT || 5001;
 require('dotenv').config();
+const raspberryPiConfig = require('./config/raspberryPiConfig');
 
 // Middleware
 app.use(express.json());
@@ -33,6 +34,7 @@ const adminRoutes = require('./routes/createAdmin');
 const subscriptionRoutes = require('./routes/subscriptionRoutes');
 const testApiRoutes = require('./routes/testApi');
 const paypackWebhook = require('./routes/paypackWebhook');
+const soilSensorRoutes = require('./routes/soilSensorRoutes');
 
 // Authentication routes
 app.use('/auth', authRoutes);
@@ -55,6 +57,9 @@ app.use('/api/subscription', subscriptionRoutes);
 
 // Paypack webhook route
 app.use('/api/paypack', paypackWebhook);
+
+// Soil sensor API routes
+app.use(soilSensorRoutes);
 
 // Start the server
 app.listen(port, () => {

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join the Movement for a Greener Planet | VermiTech</title>
@@ -62,6 +61,9 @@
             border-color: #2d5a27;
         }
         
+    </style>
+    <%- include('partials/header') %>
+    <style>
         .btn-outline-primary:hover {
             background-color: #2d5a27;
             border-color: #2d5a27;
@@ -145,9 +147,10 @@
     </style>
         
 </head>
+
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+    <%- include('partials/navbar') %>
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
                 <i class="fas fa-seedling fa-2x text-success me-2"></i>
@@ -268,7 +271,9 @@
                     <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Eco Action" class="img-fluid rounded-3 shadow">
                 </div>
                 <div class="col-md-6">
-                    <h2 class="fw-bold mb-3" style="font-size: 2.8rem;">Our Mission</h2>
+                    <h2 class="fw-bold mb-3" style="font-size: 2.5rem;">Our Environmental Solutions</h2>
+                    <p class="lead mb-4" style="font-size: 1.2rem;">We provide innovative solutions to reduce waste and promote sustainable living through vermiculture technology.</p>
+                    <a href="http://<%= config.dashboardIp %>:<%= config.dashboardPort %>" target="_blank" class="btn btn-success btn-lg mb-4">View Dashboard</a>
                     <p class="mb-3" style="font-size: 1.4rem;">VermiTech is dedicated to advancing environmental stewardship through innovative composting solutions. Our platform helps individuals, schools, and organizations manage organic waste, grow healthy soil, and build greener communities.</p>
                     <ul class="list-unstyled mb-4" style="font-size: 1.4rem;">
                         <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Reduce landfill waste and emissions</li>

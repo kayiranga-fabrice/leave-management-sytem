@@ -24,7 +24,8 @@ const requireAuth = async (req, res, next) => {
 
 // Landing page
 router.get('/', (req, res) => {
-    res.render('landing');
+    const config = require('../config/raspberryPiConfig');
+    res.render('landing', { config });
 });
 
 // Test interface
