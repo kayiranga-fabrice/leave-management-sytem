@@ -1,13 +1,13 @@
 /* Dashboard Styles */
 :root {
-    --primary-color: #2d5a27;
-    --secondary-color: #3a7d44;
-    --accent-color: #81b29a;
+    --primary-color: #1e88e5;
+    --secondary-color: #1976d2;
+    --accent-color: #64b5f6;
     --light-bg: #f8f9fa;
     --dark-bg: #343a40;
     --text-light: #f8f9fa;
     --text-dark: #212529;
-    --success: #28a745;
+    --success: #1e88e5;
     --info: #17a2b8;
     --warning: #ffc107;
     --danger: #dc3545;
