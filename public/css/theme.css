@@ -31,8 +31,8 @@
     --danger: #dc3545;
 
     /* Navbar */
-    --nav-bg: #28a745;
-    --nav-hover: #218838;
+    --nav-bg: #1e88e5;
+    --nav-hover: #1976d2;
 
     /* Card Styles */
     --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -74,8 +74,8 @@
     --warning: #ffc107;
     --danger: #dc3545;
 
-    --nav-bg: #1e4b2d;
-    --nav-hover: #1c422b;
+    --nav-bg: #0d47a1;
+    --nav-hover: #0b3d91;
 
     --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --card-hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -189,7 +189,7 @@ a:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(45, 90, 39, 0.1), rgba(45, 90, 39, 0.05));
+    background: linear-gradient(135deg, rgba(30, 136, 229, 0.1), rgba(30, 136, 229, 0.05));
     z-index: 0;
 }
 
