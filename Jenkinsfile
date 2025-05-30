@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        RENDER_DEPLOY_HOOK = credentials('RENDER_DEPLOY_HOOK') // Add this as a secret in Jenkins credentials
-    }
-
     stages {
         stage('Checkout Code') {
             steps {
@@ -57,7 +53,7 @@ pipeline {
 
         stage('Deploy to Render') {
             steps {
-                sh 'curl -X POST "$RENDER_DEPLOY_HOOK"'
+                sh 'curl -X POST "https://api.render.com/deploy/srv-xxxxxxxxxxxxxx?key=yyyyyyyyyyyyyyyyyyyy"'
             }
         }
     }
