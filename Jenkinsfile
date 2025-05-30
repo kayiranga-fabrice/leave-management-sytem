@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        RENDER_DEPLOY_HOOK = credentials('RENDER_DEPLOY_HOOK') // Jenkins secret credential
+        RENDER_DEPLOY_HOOK = 'https://your-render-webhook-url-here'  // <-- Replace with your actual URL
     }
 
     stages {
@@ -15,10 +15,9 @@ pipeline {
         stage('Set up Node.js') {
             steps {
                 sh '''
-                   curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-                   apt-get update
-                   apt-get install -y nodejs
-                   node -v && npm -v
+                  curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+                  apt-get install -y nodejs
+                  node -v && npm -v
                 '''
             }
         }
@@ -26,9 +25,8 @@ pipeline {
         stage('Set up Python') {
             steps {
                 sh '''
-                   apt-get update
-                   apt-get install -y python3 python3-pip
-                   python3 --version
+                  apt-get install -y python3 python3-pip
+                  python3 --version
                 '''
             }
         }
@@ -42,28 +40,28 @@ pipeline {
         stage('Install Python dependencies') {
             steps {
                 sh '''
-                if [ -f requirements.txt ]; then
-                  pip3 install -r requirements.txt
-                fi
+                  if [ -f requirements.txt ]; then
+                    pip3 install -r requirements.txt
+                  fi
                 '''
             }
         }
 
         stage('Run Node.js tests') {
             steps {
-                sh 'npm test || echo "No tests found or tests failed"'
+                sh 'npm test || echo "No tests found or failed"'
             }
         }
 
         stage('Run Python app (optional test)') {
             steps {
-                sh 'python3 app.py || echo "Python app run (or no script)"'
+                sh 'python3 app.py || echo "Python ran"'
             }
         }
 
         stage('Deploy to Render') {
             steps {
-                sh 'curl -X POST "$RENDER_DEPLOY_HOOK"'
+                sh "curl -X POST \"$RENDER_DEPLOY_HOOK\""
             }
         }
     }
